@@ -88,4 +88,20 @@ function iadlearning_delete_instance($id) {
 
 	return $result;
 }
+
+
+/**
+ * Retuns instances of IADLearning in a given course
+ * 
+ *
+ * @param int $id
+ * @return object instances found
+ */
+function iadlearning_get_instances_course($id) {
+	global $DB;
+
+	return $DB->get_records('iadlearning', array('course' => $id));
+	
+}
+
 ?>

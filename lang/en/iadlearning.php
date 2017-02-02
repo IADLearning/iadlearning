@@ -43,8 +43,12 @@ $string['settings_error'] = 'Some module settings are not configured. Please, co
 $string['course_access'] = 'Click on the following link to ';
 $string['iad_frontend'] = 'Front End Address';
 $string['iad_frontend_port'] = 'Front End Connection Port';
+$string['iad_frontend_nonsecure'] = 'Front End allows non HTTPS connection';
+$string['iad_backend_nonsecure'] = 'Front End allows non HTTPS connection';
 $string['iad_frontend_help'] = 'IADLearning Front End URL (no http/https))';
 $string['iad_frontend_port_help'] = 'TCP/IP Connection Port used to access IADLearning Front End';
+$string['iad_frontend_nonsecure_help'] = 'Click this option if you Front End connection does not require HTTPS';
+$string['iad_backend_nonsecure_help'] = 'Click this option if you Back End connection does not require HTTPS';
 $string['iad_backend'] = 'Back End Addresss';
 $string['iad_backend_port'] = 'Back End Connection Port';
 $string['iad_backend_help'] = 'IADLearning Back End URL (using http/https)';
@@ -72,6 +76,12 @@ $string['iad_test_attempts'] = 'Test Number of Attempts';
 $string['iad_test_score'] = 'Tests Current Score';
 
 $string['iad_test_user'] = 'User Name';
+
+$string['iad_instance_list'] = 'List of IADLearning Activities in the course';
+$string['iad_instance_name'] = 'Activity Name';
+$string['iad_instance_course'] = 'Activity IADLearning Course';
+$string['iad_instance_none'] = 'There are no IADLearning activities in this course';
+
 
 $string['iad_dt_search'] = 'Search:';
 $string['iad_dt_first'] = 'First';

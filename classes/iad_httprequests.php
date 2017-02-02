@@ -17,8 +17,9 @@
 
 class iad_http {
 
-    public function __construct($url, $port) {
+    public function __construct($protocol, $url, $port) {
 
+        $this->protocol = $protocol;
         $this->url = $url;
         $this->port = $port;
 
@@ -27,7 +28,7 @@ class iad_http {
 
     public function iad_hhtp_get($api_call, $query_string = null) {
 
-        $final_url = $this->url . ":" . $this->port . $api_call;
+        $final_url = $this->protocol . $this->url . ":" . $this->port . $api_call;
         if ($query_string) {
             $final_url = $final_url . '?' . $query_string; 
         }

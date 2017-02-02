@@ -23,7 +23,7 @@ function xmldb_iad_upgrade($oldversion) {
     $dbman = $DB->get_manager();
 
     if($oldversion < 2015041501) {
-    	$table = new xmldb_table('iad');
+    	$table = new xmldb_table('iadlearning');
     	$field = new xmldb_field('iad_course_name', XMLDB_TYPE_CHAR, '256',null, null, null, null, null);
 
     	if(!$dbman->field_exists($table, $field)) {
@@ -31,7 +31,7 @@ function xmldb_iad_upgrade($oldversion) {
     		$dbman->add_field($table, $field);
     	}
 
-    	upgrade_plugin_savepoint(true, 2015041501, 'mod', 'iad');
+    	upgrade_plugin_savepoint(true, 2015041501, 'mod', 'iadlearning');
     }
 
     return true;

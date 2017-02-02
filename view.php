@@ -66,8 +66,8 @@ $event->add_record_snapshot('course', $PAGE->course);
 $event->trigger();
 
 /** Check activity configuration is valid */
-if(!isset($CFG->iad_frontend) || empty($CFG->iad_frontend_port) || !isset($CFG->iad_backend) || empty($CFG->iad_backend_port) 
-	|| !isset($CFG->iad_access_key) || empty($CFG->iad_secret_access_key)) {
+if ( null == get_config('mod_iadlearning','iad_frontend') || empty(get_config('mod_iadlearning','iad_frontend_port')) || null == get_config('mod_iadlearning','iad_backend') || empty(get_config('mod_iadlearning','iad_backend_port')) 
+	|| null == get_config('mod_iadlearning','iad_access_key') || empty(get_config('mod_iadlearning','iad_secret_access_key'))) {
 
 	$script = "alert(\"" . get_string('settings_error', 'iadlearning') . "\");
 			location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
@@ -89,7 +89,7 @@ switch (sizeof($user_roles)) {
 }
 
 // Generate Encoded Signature
-$requestparameters["accesskey"] = $CFG->iad_access_key;
+$requestparameters["accesskey"] = get_config('mod_iadlearning','iad_access_key');
 $requestparameters["course"] = $iad->iad_course;
 $requestparameters["email"] = $USER->email;
 $requestparameters["enrollmentstart"] = "";
@@ -103,7 +103,7 @@ $requestparameters["type"] = 1;
 
 
 // Generate URL query string for http requests to iAdLearning
-$secretAccessKey = $CFG->iad_secret_access_key;
+$secretAccessKey = get_config('mod_iadlearning','iad_secret_access_key');
 $signature = generate_signature($secretAccessKey, $requestparameters);
 $requestparameters["signature"] = $signature;
 
@@ -111,14 +111,18 @@ $requestparameters["signature"] = $signature;
 $querystring = generate_url_query($requestparameters);
 
 // Compute URL to open iAdLearning Activity
-$protocol = !empty( $_SERVER['HTTPS']) ? 'https://' : 'http://';
-$backend = $CFG->iad_backend;
-$backend_port = $CFG->iad_backend_port;
-$frontend = $CFG->iad_frontend;
-$frontend_port = $CFG->iad_frontend_port;
+$backend_protocol = get_config('mod_iadlearning','iad_backend_nonsecure') ? 'http://': 'https://';
+$backend = get_config('mod_iadlearning','iad_backend');
+$backend_port = get_config('mod_iadlearning','iad_backend_port');
+$frontend_protocol = get_config('mod_iadlearning','iad_frontend_nonsecure') ? 'http://': 'https://';
+$frontend = get_config('mod_iadlearning','iad_frontend');
+$frontend_port = get_config('mod_iadlearning','iad_frontend_port');
+
 
 // Script to open the activity in iAdLearning
-$finalurl = $protocol . $frontend . ":" . $frontend_port . "/external/login?" . $querystring;
+$finalurl = $frontend_protocol . $frontend . ":" . $frontend_port . "/external/login?" . $querystring;
+
+
 $script = "window.open('" . $finalurl . "', '_blank', 'location=no,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=1000');";
 //$open_window = "iad_open_course('" . $finalurl . "')";
 
@@ -126,7 +130,7 @@ $platform_url_found = false;
 $last_access_found = false;
 $test_info_found = false;
 
-$api_controller = new iad_http($backend, $backend_port);
+$api_controller = new iad_http($backend_protocol, $backend, $backend_port);
 
 /** Gather iAdLearning Platform ID */
 $apicall_platform = '/api/v2/platforms/url/' . $frontend;
@@ -142,7 +146,7 @@ if (($result) && ($json["_id"])) {
 	$apicall_all_tests = '/api/v2/external/' . $json["_id"] . '/all';
 
 	/** Request Last Access Information */
-	$api_controller = new iad_http($backend, $backend_port);
+	$api_controller = new iad_http($backend_protocol, $backend, $backend_port);
 	$access = $api_controller->iad_hhtp_get($apicall_access, $querystring);
 
 	if ($access) {
@@ -154,7 +158,7 @@ if (($result) && ($json["_id"])) {
 		}
 		else {
 			$timestamp = strtotime($access_json["date"]);
-			$last_access = userdate($timestamp); // . " " . usertime($timestamp);
+			$last_access = userdate($timestamp); 
 		}
 			
 		/** Request Tests Information */
@@ -257,7 +261,7 @@ if ($test_info_found) {
 
 }
 
-/** Print the page header */
+/** Print the page footer */
 echo $OUTPUT->footer(); 
 
 ?>

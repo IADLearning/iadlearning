@@ -44,8 +44,12 @@ $string['iad_frontend_help'] = 'Dirección utilizada para conectar al Front End 
 $string['iad_frontend_port_help'] = 'Puerto utilizado para conectar al Front End de IADLearning';
 $string['iad_backend'] = 'Dirección Back End';
 $string['iad_backend_port'] = 'Puerto para conexión al Back End';
+$string['iad_frontend_nonsecure'] = 'Front End permite conexiones no HTTPS';
+$string['iad_backend_nonsecure'] = 'Front End permite conexiones no HTTPS';
 $string['iad_backend_help'] = 'Dirección utilizada para conectar al Back End de IADLearning (sin http/https)';
 $string['iad_backend_port_help'] = 'Puerto utilizado para conectar al Back End de IADLearning';
+$string['iad_frontend_nonsecure_help'] = 'Seleccione esta opción si el Front End no requiere HTTPS';
+$string['iad_backend_nonsecure_help'] = 'Seleccione esta opción si el Back End no requiere HTTPS';
 $string['iad_access_key_id'] = 'ID de Clave de Acceso';
 $string['iad_access_key_id_help'] = 'Identificador de la Clave de Acceso';
 $string['iad_secret_access_key'] = 'Clave de Acceso Secreta';
@@ -69,6 +73,11 @@ $string['iad_test_attempts'] = 'Número de Intentos';
 $string['iad_test_score'] = 'Puntuación Actual';
 
 $string['iad_test_user'] = 'Nombre Usuario';
+
+$string['iad_instance_list'] = 'Lista de Actividades IADLearning en el curso';
+$string['iad_instance_name'] = 'Nombre de la Actividad';
+$string['iad_instance_course'] = 'Curso en IADLearning';
+$string['iad_instance_none'] = 'No existen actividades de tipo IADLearning en este curso';
 
 $string['iad_dt_search'] = 'Búsqueda:';
 $string['iad_dt_first'] = 'First';

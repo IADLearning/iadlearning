@@ -20,42 +20,56 @@ defined('MOODLE_INTERNAL') || die;
 if($ADMIN->fulltree) {
 
 	// Frontend URL
-	$name = 'iad_frontend';
-	$title = get_string('iad_frontend', 'iad');
-	$description = get_string('iad_frontend_help', 'iad');
+	$name = 'mod_iadlearning/iad_frontend';
+	$title = get_string('iad_frontend', 'iadlearning');
+	$description = get_string('iad_frontend_help', 'iadlearning');
 	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
 	// Frontend port
-	$name = 'iad_frontend_port';
-	$title = get_string('iad_frontend_port', 'iad');
-	$description = get_string('iad_frontend_port_help', 'iad');
+	$name = 'mod_iadlearning/iad_frontend_port';
+	$title = get_string('iad_frontend_port', 'iadlearning');
+	$description = get_string('iad_frontend_port_help', 'iadlearning');
 	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
+	//Front End non secure connection
+	$name = 'mod_iadlearning/iad_frontend_nonsecure';
+	$title = get_string('iad_frontend_nonsecure', 'iadlearning');
+	$description = get_string('iad_frontend_nonsecure_help', 'iadlearning');
+	$setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+	$settings->add($setting);
+
 	// Backend URL
-	$name = 'iad_backend';
+	$name = 'mod_iadlearning/iad_backend';
 	$title = get_string('iad_backend', 'iad');
 	$description = get_string('iad_backend_help', 'iad');
 	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
 	// Backend port
-	$name = 'iad_backend_port';
+	$name = 'mod_iadlearning/iad_backend_port';
 	$title = get_string('iad_backend_port', 'iad');
 	$description = get_string('iad_backend_port_help', 'iad');
 	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
+	// Back End non secure connection
+	$name = 'mod_iadlearning/iad_backend_nonsecure';
+	$title = get_string('iad_backend_nonsecure', 'iadlearning');
+	$description = get_string('iad_backend_nonsecure_help', 'iadlearning');
+	$setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+	$settings->add($setting);
+
 	// Access Key ID
-	$name = 'iad_access_key';
+	$name = 'mod_iadlearning/iad_access_key';
 	$title = get_string('iad_access_key_id', 'iad');
 	$description = get_string('iad_access_key_id_help', 'iad');
 	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
 	// Secret Access key
-	$name = 'iad_secret_access_key';
+	$name = 'mod_iadlearning/iad_secret_access_key';
 	$title = get_string('iad_secret_access_key', 'iad');
 	$description = get_string('iad_secret_access_key_help', 'iad');
 	$setting = new admin_setting_configtext($name, $title, $description, '');
