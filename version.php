@@ -26,10 +26,24 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2017012601;	
-$module->requires  = 2012120311;	
-$module->cron      = 0;				
-$module->component = 'mod_iadlearning';		
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0';
+global $CFG;
 
+if ($CFG->version >= 2015111600) {  //Moodle 3.0
+
+	$plugin->version   = 2017012601;			// The current module version (Date: YYYYMMDDXX)
+	$plugin->requires  = 2012120311;			// Requires this Moodle version
+	$plugin->component = 'mod_iadlearning';		// Full name of the plugin (used for diagnostics)
+	$plugin->cron      = 0;
+	$plugin->maturity = MATURITY_STABLE;
+	$plugin->release = '1.0';
+
+} else { 
+
+	$module->version   = 2016090901;			// The current module version (Date: YYYYMMDDXX)
+	$module->requires  = 2012120311;			// Requires this Moodle version
+	$module->component = 'mod_iadlearning';		// Full name of the plugin (used for diagnostics)
+	$module->cron      = 0;
+	$module->maturity = MATURITY_STABLE;
+	$module->release = '1.0';
+	
+}
