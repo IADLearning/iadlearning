@@ -66,8 +66,7 @@ $event->add_record_snapshot('course', $PAGE->course);
 $event->trigger();
 
 /** Check activity configuration is valid */
-if ( null == get_config('mod_iadlearning','iad_frontend') || empty(get_config('mod_iadlearning','iad_frontend_port')) || null == get_config('mod_iadlearning','iad_backend') || empty(get_config('mod_iadlearning','iad_backend_port')) 
-	|| null == get_config('mod_iadlearning','iad_access_key') || empty(get_config('mod_iadlearning','iad_secret_access_key'))) {
+if ( null == get_config('iadlearning', 'iad_backend') || null == get_config('iadlearning', 'iad_access_key') || empty(get_config('iadlearning', 'iad_secret_access_key'))) {
 
 	$script = "alert(\"" . get_string('settings_error', 'iadlearning') . "\");
 			location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
@@ -75,6 +74,49 @@ if ( null == get_config('mod_iadlearning','iad_frontend') || empty(get_config('m
 	echo html_writer::script($script);
 	exit;
 }
+
+
+//** Gather IADLearning instance information */
+$full_url = get_config('iadlearning', 'iad_backend');
+
+$api_controller = new iad_http(parse_url($full_url, PHP_URL_SCHEME) . '://', parse_url($full_url, PHP_URL_HOST), parse_url($full_url, PHP_URL_PORT));
+
+$api_info_call = '/api/v2/external/partner-info';
+$requestparameters["timestamp"] = time();
+$requestparameters["accesskey"] = get_config('iadlearning', 'iad_access_key');
+$access_key = get_config('iadlearning', 'iad_access_key');
+$secret_access_key = get_config('iadlearning', 'iad_secret_access_key');
+
+$signature = generate_signature($secret_access_key, $requestparameters);
+$requestparameters["signature"] = $signature;
+
+$querystring = generate_url_query($requestparameters);
+
+list($response_code, $instance_info) = $api_controller->iad_http_get($api_info_call, $querystring);
+
+if ($response_code != 200) {
+
+    $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\");
+        location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
+
+    echo html_writer::script($script);
+
+}
+$instance_info_json = json_decode($instance_info);
+
+try {
+    
+    $frontend = $instance_info_json->url;
+    $platform_id = $instance_info_json->platformId;
+
+}
+catch (Exception $e) {
+
+    $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\")";
+    echo html_writer::script($script);
+
+}
+
 
 /** Find out user roles */
 $user_roles = get_user_roles($course_context, $USER->id);
@@ -88,8 +130,10 @@ switch (sizeof($user_roles)) {
 		break;
 }
 
+unset($requestparameters);
+
 // Generate Encoded Signature
-$requestparameters["accesskey"] = get_config('mod_iadlearning','iad_access_key');
+$requestparameters["accesskey"] = $access_key;
 $requestparameters["course"] = $iad->iad_course;
 $requestparameters["email"] = $USER->email;
 $requestparameters["enrollmentstart"] = "";
@@ -103,53 +147,36 @@ $requestparameters["type"] = 1;
 
 
 // Generate URL query string for http requests to iAdLearning
-$secretAccessKey = get_config('mod_iadlearning','iad_secret_access_key');
-$signature = generate_signature($secretAccessKey, $requestparameters);
+$signature = generate_signature($secret_access_key, $requestparameters);
 $requestparameters["signature"] = $signature;
-
-
 $querystring = generate_url_query($requestparameters);
-
-// Compute URL to open iAdLearning Activity
-$backend_protocol = get_config('mod_iadlearning','iad_backend_nonsecure') ? 'http://': 'https://';
-$backend = get_config('mod_iadlearning','iad_backend');
-$backend_port = get_config('mod_iadlearning','iad_backend_port');
-$frontend_protocol = get_config('mod_iadlearning','iad_frontend_nonsecure') ? 'http://': 'https://';
-$frontend = get_config('mod_iadlearning','iad_frontend');
-$frontend_port = get_config('mod_iadlearning','iad_frontend_port');
 
 
 // Script to open the activity in iAdLearning
-$finalurl = $frontend_protocol . $frontend . ":" . $frontend_port . "/external/login?" . $querystring;
+$front_url = $frontend . "/external/login?" . $querystring;
 
 
-$script = "window.open('" . $finalurl . "', '_blank', 'location=no,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=1000');";
-//$open_window = "iad_open_course('" . $finalurl . "')";
+$script = "window.open('" . $front_url . "', '_blank', 'location=no,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=1000');";
 
 $platform_url_found = false;
 $last_access_found = false;
 $test_info_found = false;
 
-$api_controller = new iad_http($backend_protocol, $backend, $backend_port);
 
 /** Gather iAdLearning Platform ID */
-$apicall_platform = '/api/v2/platforms/url/' . $frontend;
-$result = $api_controller->iad_hhtp_get($apicall_platform);
-$json = json_decode($result, true);
 
-if (($result) && ($json["_id"])) {
+if ($platform_id) {
 
 	$platform_url_found = true;
 	
-	$apicall_access = '/api/v2/external/' . $json["_id"] . '/access';
-	$apicall_tests = '/api/v2/external/' . $json["_id"] . '/tests';
-	$apicall_all_tests = '/api/v2/external/' . $json["_id"] . '/all';
+	$apicall_access = '/api/v2/external/' . $platform_id . '/access';
+	$apicall_tests = '/api/v2/external/' . $platform_id . '/tests';
+	$apicall_all_tests = '/api/v2/external/' . $platform_id . '/all';
 
 	/** Request Last Access Information */
-	$api_controller = new iad_http($backend_protocol, $backend, $backend_port);
-	$access = $api_controller->iad_hhtp_get($apicall_access, $querystring);
+	list($response_code, $access) = $api_controller->iad_http_get($apicall_access, $querystring);
 
-	if ($access) {
+	if (($access) && ($response_code == 200)){
 
 		$last_access_found = true;
 		$access_json = json_decode($access, true);
@@ -167,12 +194,12 @@ if (($result) && ($json["_id"])) {
 		$table->align = array('left', 'left', 'center', 'center');
 
 		if (has_capability('mod/iadlearning:view_tests_report', $context)) {
-			$tests = $api_controller->iad_hhtp_get($apicall_all_tests, $querystring);
+			list($response_code, $tests) = $api_controller->iad_http_get($apicall_all_tests, $querystring);
 			$table->size = array('30%', '30%', '20%', '20%');
 			$table->head = array(get_string('iad_test_user', 'iadlearning'), get_string('iad_test_title', 'iadlearning'), get_string('iad_test_attempts', 'iadlearning'), get_string('iad_test_score', 'iadlearning'));
 		}
 		else {
-			$tests = $api_controller->iad_hhtp_get($apicall_tests, $querystring);
+			list($response_code, $tests) = $api_controller->iad_hhtp_get($apicall_tests, $querystring);
 			$table->size = array('20%', '40%', '20%', '20%');
 			$table->head = array(get_string('iad_test_id', 'iadlearning'), get_string('iad_test_title', 'iadlearning'), get_string('iad_test_attempts', 'iadlearning'), get_string('iad_test_score', 'iadlearning'));
 		}

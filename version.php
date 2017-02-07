@@ -24,26 +24,28 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 global $CFG;
 
-if ($CFG->version >= 2015111600) {  //Moodle 3.0
+defined('MOODLE_INTERNAL') || die();
 
-	$plugin->version   = 2017012601;			// The current module version (Date: YYYYMMDDXX)
-	$plugin->requires  = 2012120311;			// Requires this Moodle version
-	$plugin->component = 'mod_iadlearning';		// Full name of the plugin (used for diagnostics)
-	$plugin->cron      = 0;
-	$plugin->maturity = MATURITY_STABLE;
-	$plugin->release = '1.0';
+if ($CFG->version >= 2015111600) {  //Moodle 30
 
-} else { 
+	$plugin->version	= 2016120600;		// The current module version (Date: YYYYMMDDXX)
+	$plugin->requires	= 2012120311;		// Requires this Moodle version
+	$plugin->cron		= 0;				// Period for cron to check this module (secs)
+	$plugin->component	= 'mod_iadlearning';
+	$plugin->maturity	= MATURITY_STABLE;
+	$plugin->release	= '1.0';			// User-friendly version number
 
-	$module->version   = 2016090901;			// The current module version (Date: YYYYMMDDXX)
-	$module->requires  = 2012120311;			// Requires this Moodle version
-	$module->component = 'mod_iadlearning';		// Full name of the plugin (used for diagnostics)
-	$module->cron      = 0;
+} else {
+
+	$module->version   = 2017020701;	
+	$module->requires  = 2012120311;	
+	$module->cron      = 0;				
+	$module->component = 'mod_iadlearning';		
 	$module->maturity = MATURITY_STABLE;
 	$module->release = '1.0';
-	
 }
+
+
+

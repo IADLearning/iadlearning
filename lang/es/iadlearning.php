@@ -46,7 +46,7 @@ $string['iad_backend'] = 'Dirección Back End';
 $string['iad_backend_port'] = 'Puerto para conexión al Back End';
 $string['iad_frontend_nonsecure'] = 'Front End permite conexiones no HTTPS';
 $string['iad_backend_nonsecure'] = 'Front End permite conexiones no HTTPS';
-$string['iad_backend_help'] = 'Dirección utilizada para conectar al Back End de IADLearning (sin http/https)';
+$string['iad_backend_help'] = 'Dirección utilizada para conectar al Back End de IADLearning (con http/https)';
 $string['iad_backend_port_help'] = 'Puerto utilizado para conectar al Back End de IADLearning';
 $string['iad_frontend_nonsecure_help'] = 'Seleccione esta opción si el Front End no requiere HTTPS';
 $string['iad_backend_nonsecure_help'] = 'Seleccione esta opción si el Back End no requiere HTTPS';
@@ -87,6 +87,17 @@ $string['iad_dt_last'] = 'Último';
 $string['iad_dt_info'] = 'Mostrando elemento _START_ a _END_ de _TOTAL_ elementos';
 $string['iad_dt_infoEmpty'] = 'Mostrando elemento 0 a 0 de 0 elementos';
 $string['iad_dt_lengthMenu'] = 'Mostrando _MENU_ elementos';
+
+$string['iad_license_info'] = 'Información para la licencia';
+$string['iad_name'] = 'Nombre';
+$string['iad_lastname'] = 'Apellidos';
+$string['iad_email'] = 'Dirección e-mail';
+$string['iad_institution'] = 'Institucion';
+$string['iad_phone'] = 'Teléfono';
+$string['iad_credentials'] = 'Credencials de acceso a IADLearning';
+$string['iad_username'] = 'Nombre de Usuario';
+$string['iad_pass'] = 'Contraseña';
+$string['iad_autoprovisioning_error'] = 'Se ha producido un error al obtener sus credenciales. Por favor, contacte info@iadlearning.com';
 
 
 

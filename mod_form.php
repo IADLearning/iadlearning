@@ -30,6 +30,7 @@ require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__FILE__).'/lib.php');
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once('locallib.php');
+require(dirname(__FILE__) . '/classes/iad_httprequests.php');
 
 /**
  * The main iad configuration class.
@@ -83,23 +84,61 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         $mform->setType('password', PARAM_TEXT);
 
         // Check activity configuration is valid
-        if(!isset($CFG->iad_frontend) || empty($CFG->iad_frontend_port) || !isset($CFG->iad_backend) || empty($CFG->iad_backend_port) 
-            || !isset($CFG->iad_access_key) || empty($CFG->iad_secret_access_key)) {
+        if ( null == get_config('iadlearning', 'iad_backend') || null == get_config('iadlearning', 'iad_access_key') || null == get_config('iadlearning','iad_secret_access_key')) {
 
-            $script = "alert(\"" . get_string('settings_error', 'iad') . "\");
-                    location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
+            $script = "alert(\"" . get_string('settings_error', 'iadlearning') . "\");
+                location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
 
             echo html_writer::script($script);
             exit;
-        }    
+        }
 
 
-		$frontend = $CFG->iad_frontend;
-        //$protocol = !empty( $_SERVER['HTTPS']) ? 'https://' : 'http://';
-        $url = $CFG->iad_backend . ":" . $CFG->iad_backend_port;
+        //** Gather IADLearning instance information */
+        // Instance to use for the configured keys
+        $full_url = get_config('iadlearning', 'iad_backend');
+
+        $api_controller = new iad_http(parse_url($full_url, PHP_URL_SCHEME) . '://', parse_url($full_url, PHP_URL_HOST), parse_url($full_url, PHP_URL_PORT));
+
+        $api_info_call = '/api/v2/external/partner-info';
+        $requestparameters["timestamp"] = time();
+        $requestparameters["accesskey"] = get_config('iadlearning', 'iad_access_key');
+        $access_key = get_config('iadlearning', 'iad_access_key');
+        $secret_access_key = get_config('iadlearning', 'iad_secret_access_key');
+
+        $signature = generate_signature($secret_access_key, $requestparameters);
+        $requestparameters["signature"] = $signature;
+
+        $querystring = generate_url_query($requestparameters);
+
+        list($response_code, $instance_info) = $api_controller->iad_http_get($api_info_call, $querystring);
+
+        if ($response_code != 200) {
+
+            $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\");
+                location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
+
+            echo html_writer::script($script);
+
+        }
+        $instance_info_json = json_decode($instance_info);
+
+        try {
+            
+            $frontend = $instance_info_json->url;
+            $platform_id = $instance_info_json->platformId;
+
+        }
+        catch (Exception $e) {
+
+            $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\")";
+            echo html_writer::script($script);
+
+        }
+
 
         $mform->addElement('button', 'check_auth', get_string('load_courses', 'iadlearning'), array(
-        		'onclick'	=>	"iad_get_course_list('" . $url . "', '" . $frontend . "', document.getElementById('id_email').value, document.getElementById('id_password').value, '" . get_string('login_failed', 'iadlearning') . "')",	// , '', '', 0, '', '', '', '', '', '', '', '')",
+        		'onclick'	=>	"iad_get_course_list('{$full_url}', '{$platform_id}', document.getElementById('id_email').value, document.getElementById('id_password').value, '" . get_string('login_failed', 'iadlearning') . "')",	// , '', '', 0, '', '', '', '', '', '', '', '')",
         		'style'		=>	'width: 25%; line-height: 20px; cursor: pointer; float: left; margin-left: 7%'
 		));
 

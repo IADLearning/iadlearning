@@ -26,7 +26,7 @@ class iad_http {
     }
 
 
-    public function iad_hhtp_get($api_call, $query_string = null) {
+    public function iad_http_get($api_call, $query_string = null) {
 
         $final_url = $this->protocol . $this->url . ":" . $this->port . $api_call;
         if ($query_string) {
@@ -41,9 +41,44 @@ class iad_http {
             if( ! $response = curl_exec($ch)) 
             { 
                 trigger_error(curl_error($ch)); 
-            } 
+            }
+            $response_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
             curl_close($ch);
-            return $response;
+            return array($response_code, $response);
+        } catch (Exception $e) {
+            $errorexecption = $e->getMessage();
+            $errormsg = get_string('error_in_service', 'iad'). " " . $errorexecption;
+            print_error($errormsg);
+        }
+
+    }
+
+
+
+    public function iad_http_post($api_call, $fields = null, $query_string = null) {
+
+        $final_url = $this->protocol . $this->url . ":" . $this->port . $api_call;
+        if ($query_string) {
+            $final_url = $final_url . '?' . $query_string; 
+        }
+        $data = json_encode($fields);
+
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $final_url );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_setopt($ch, CURLOPT_VERBOSE, 1 );
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            if( ! $response = curl_exec($ch)) 
+            { 
+                trigger_error(curl_error($ch)); 
+            }
+            $response_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+            curl_close($ch);
+            return array($response_code, $response);
         } catch (Exception $e) {
             $errorexecption = $e->getMessage();
             $errormsg = get_string('error_in_service', 'iad'). " " . $errorexecption;

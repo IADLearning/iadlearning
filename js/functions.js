@@ -17,29 +17,58 @@
 
 
 var api = '/api/v2';
+var demoKeyManager = "demokeymanager.elearningcloud.net";
 
 
 /*
  *  Main Interface Functions
-*/
+ */
 
-function iad_get_course_list(url, platform, email, password, loginFailedMessage) {
 
-	var reqUrl = url + api + '/platforms/url/' + platform;
+ function iad_get_demo_keys(userId, name, lastname, phone, email, institution, url) {
+
+	var reqUrl = demoKeyManager + api + '/external/key-provisioning/';
+	var data = {
+		id: userId,
+		name: name,
+		lastname: lastname,
+		phone: phone,
+		email: email,
+		institution: institution,
+		url: url
+	};
 	$.ajax({
-		type: 'GET',
+		type: 'POST',
 		url: reqUrl,
-
+		data: data,
 		success:
 			function(response) {
-				var platformId = response._id;
-				iad_login_request(url, platformId, email, password, loginFailedMessage);
+				
 			},
 
 		contentType: "application/json"
 	});
 
 }
+
+
+// function iad_get_course_list(url, platform, email, password, loginFailedMessage) {
+
+// 	var reqUrl = url + api + '/platforms/url/' + platform;
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: reqUrl,
+
+// 		success:
+// 			function(response) {
+// 				var platformId = response._id;
+// 				iad_login_request(url, platformId, email, password, loginFailedMessage);
+// 			},
+
+// 		contentType: "application/json"
+// 	});
+
+// }
 
 
 
@@ -64,11 +93,11 @@ function iad_get_last_access(url, platform, email, password, loginFailedMessage)
 }
 
 
-/*
- *  Support Functions
-*/
 
-function iad_login_request(url, platformId, email, password, loginFailedMessage) {
+
+
+
+function iad_get_course_list(url, platformId, email, password, loginFailedMessage) {
 
 	var reqUrl = url + api + '/platforms/' + platformId + '/login';
 	var reqData = JSON.stringify({'email': email, 'password': password});
@@ -93,6 +122,11 @@ function iad_login_request(url, platformId, email, password, loginFailedMessage)
 	});
 }
 
+
+
+/*
+ *  Support Functions
+*/
 
 
 function iad_course_list_request(url, platformId, token, number) {
@@ -169,6 +203,18 @@ function setIadFields() {
 	iadCourse.value = selectCourse.value;
 	iadCourseName.value = selectCourse.options[ selectCourse.selectedIndex ].text;
 }
+
+
+function setCongfigFields() {
+
+	var iadCourse = document.getElementById('id_iad_course');
+	var iadCourseName = document.getElementById('id_iad_course_name');
+	var selectCourse = document.getElementById('id_select_course');
+
+	iadCourse.value = selectCourse.value;
+	iadCourseName.value = selectCourse.options[ selectCourse.selectedIndex ].text;
+}
+
 
 
 /******************************************************************************************************/

@@ -45,7 +45,7 @@ $string['iad_frontend'] = 'Front End Address';
 $string['iad_frontend_port'] = 'Front End Connection Port';
 $string['iad_frontend_nonsecure'] = 'Front End allows non HTTPS connection';
 $string['iad_backend_nonsecure'] = 'Front End allows non HTTPS connection';
-$string['iad_frontend_help'] = 'IADLearning Front End URL (no http/https))';
+$string['iad_frontend_help'] = 'IADLearning Front End URL';
 $string['iad_frontend_port_help'] = 'TCP/IP Connection Port used to access IADLearning Front End';
 $string['iad_frontend_nonsecure_help'] = 'Click this option if you Front End connection does not require HTTPS';
 $string['iad_backend_nonsecure_help'] = 'Click this option if you Back End connection does not require HTTPS';
@@ -91,6 +91,23 @@ $string['iad_dt_last'] = 'Last';
 $string['iad_dt_info'] = 'Showing _START_ to _END_ of _TOTAL_ elements';
 $string['iad_dt_infoEmpty'] = 'Showing 0 to 0 of 0 elements';
 $string['iad_dt_lengthMenu'] = 'Showing _MENU_ elements';
+
+$string['iad_license_info'] = 'Activity IADLearning Course';
+$string['iad_name'] = 'Name';
+$string['iad_lastname'] = 'Lastname';
+$string['iad_email'] = 'E-mail address';
+$string['iad_institution'] = 'Institution';
+$string['iad_phone'] = 'Phone Number';
+$string['iad_credentials'] = 'IADLearning Access Credentials';
+$string['iad_username'] = 'Username';
+$string['iad_pass'] = 'Password';
+$string['iad_autoprovisioning_error'] = 'There has been an error when retreiving your credentials. Please contact info@iadlearning.com';
+$string['iad_servercontact_error'] = 'There has been an error connecting to IADLearning server. Please contact info@iadlearning.com';
+
+
+
+$string['iad_license_info'] = 'Activity IADLearning Course';
+$string['iad_license_info'] = 'Activity IADLearning Course';
 
 
 $string['error_in_service'] = 'Error connecting to remote system';
