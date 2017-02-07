@@ -66,7 +66,7 @@ if ($mform->is_cancelled()) {
 } else if ($fromform = $mform->get_data()) {
 
 	$protocol = 'https://';
-	$key_manager = 'keymanagerpre.elearningcloud.net';
+	$key_manager = 'keymanager.elearningcloud.net';
 	$port = 443;
   	$api_controller = new iad_http($protocol, $key_manager, $port);
   	$api_call = '/api/v2/external/key-provisioning';
