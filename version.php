@@ -16,7 +16,7 @@
 
 
 /**
- * Defines the version of iad module
+ * Defines the version of iadlearning module
  *
  * @package    mod_iadlearning
  * @copyright  www.itoptraining.com 
@@ -30,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($CFG->version >= 2015111600) {  //Moodle 30
 
-	$plugin->version	= 2016120600;		// The current module version (Date: YYYYMMDDXX)
+	$plugin->version	= 2017020801;		// The current module version (Date: YYYYMMDDXX)
 	$plugin->requires	= 2012120311;		// Requires this Moodle version
 	$plugin->cron		= 0;				// Period for cron to check this module (secs)
 	$plugin->component	= 'mod_iadlearning';
@@ -39,7 +39,7 @@ if ($CFG->version >= 2015111600) {  //Moodle 30
 
 } else {
 
-	$module->version   = 2017020701;	
+	$module->version   = 2017020801;	
 	$module->requires  = 2012120311;	
 	$module->cron      = 0;				
 	$module->component = 'mod_iadlearning';		

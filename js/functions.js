@@ -15,9 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Library of Javascript functions and constants for iadlearning module
+ *
+ * All the core Moodle functions needed to allow the module to work integrated in Moodle, should be placed here.
+ * All the iad specific functions, needed to implement all the module logic, should go to locallib.php. 
+ * This will help to save some memory when Moodle is performing actions across all modules.
+ *
+ * @package    	mod_iadlearning
+ * @copyright  	www.itoptraining.com 
+ * @author     	jose.omedes@itoptraining.com
+ * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @date		2017-02-10
+ */
+
 
 var api = '/api/v2';
-var demoKeyManager = "demokeymanager.elearningcloud.net";
+var demoKeyManager = "keymanager.elearningcloud.net";
 
 
 /*
@@ -50,25 +64,6 @@ var demoKeyManager = "demokeymanager.elearningcloud.net";
 	});
 
 }
-
-
-// function iad_get_course_list(url, platform, email, password, loginFailedMessage) {
-
-// 	var reqUrl = url + api + '/platforms/url/' + platform;
-// 	$.ajax({
-// 		type: 'GET',
-// 		url: reqUrl,
-
-// 		success:
-// 			function(response) {
-// 				var platformId = response._id;
-// 				iad_login_request(url, platformId, email, password, loginFailedMessage);
-// 			},
-
-// 		contentType: "application/json"
-// 	});
-
-// }
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-// This file is part of iAdLearning Moodle Plugin - http://www.iadlearning.com/
+// This file is part of iadlearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,6 +14,16 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Handles iadlearning course view event
+ *
+ * @package     mod_iadlearning
+ * @copyright   www.itoptraining.com 
+ * @author      jose.omedes@itoptraining.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @date        2017-01-26
+ */
 
 namespace mod_iadlearning\event;
 

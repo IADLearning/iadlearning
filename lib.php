@@ -1,5 +1,5 @@
 <?php
-// This file is part of iAdLearning Moodle Plugin - http://www.iadlearning.com/
+// This file is part of iadlearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  * @copyright  	www.itoptraining.com 
  * @author     	jose.omedes@itoptraining.com
  * @license    	http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date		2014-27-11
+ * @date		2017-02*10
  */
 
 /**

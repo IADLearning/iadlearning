@@ -1,5 +1,5 @@
 <?php
-// This file is part of iAdLearning Moodle Plugin - http://www.iadlearning.com/
+// This file is part of iadlearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

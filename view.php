@@ -21,7 +21,7 @@
  * @copyright   www.itoptraining.com 
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date		2017-01-26
+ * @date		2017-02-10
  */
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
