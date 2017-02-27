@@ -1,5 +1,5 @@
 <?php
-// This file is part of iadlearning Moodle Plugin - http://www.iadlearning.com/
+// This file is part of iAdLearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Requests Access Keys for iadlearning
+ * Requests Access Keys for IADLearning
  *
  * @package     mod_iadlearning
  * @copyright   www.itoptraining.com 
@@ -71,24 +71,12 @@ if ($mform->is_cancelled()) {
   	$api_controller = new iad_http($protocol, $key_manager, $port);
   	$api_call = '/api/v2/external/key-provisioning';
 
-  	//** Popolate remainding fields required to get the key */
+  	//** Populate remainding fields required to get the key */
   	$form_data = new stdClass();
   	$form_data = $mform->get_data();
-  	
-  	$form_data->id = $USER->id;
-	
-	$user_roles = get_user_roles($context, $USER->id);
-	$first_role = reset($user_roles);
-	switch (sizeof($user_roles)) {
-		case 0: /* User has reached the element not being enrolled - It is and admin user */
-			$rol_name = "admin";
-			break;
-		default:
-			$rol_name =  $first_role->shortname;
-			break;
-	}
 
-	$form_data->role = $rol_name;
+  	unset($form_data->id);
+	$form_data->role = "Demo-Admin";
 	$form_data->url =  $_SERVER['HTTP_HOST'];
 
 	unset($form_data->submitbutton);

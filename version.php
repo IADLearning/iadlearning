@@ -28,24 +28,11 @@ global $CFG;
 
 defined('MOODLE_INTERNAL') || die();
 
-if ($CFG->version >= 2015111600) {  //Moodle 30
 
-	$plugin->version	= 2017020801;		// The current module version (Date: YYYYMMDDXX)
-	$plugin->requires	= 2012120311;		// Requires this Moodle version
-	$plugin->cron		= 0;				// Period for cron to check this module (secs)
-	$plugin->component	= 'mod_iadlearning';
-	$plugin->maturity	= MATURITY_STABLE;
-	$plugin->release	= '1.0';			// User-friendly version number
-
-} else {
-
-	$module->version   = 2017020801;	
-	$module->requires  = 2012120311;	
-	$module->cron      = 0;				
-	$module->component = 'mod_iadlearning';		
-	$module->maturity = MATURITY_STABLE;
-	$module->release = '1.0';
-}
-
-
+$plugin->version	= 2017022701;		// The current module version (Date: YYYYMMDDXX)
+$plugin->requires	= 2012120311;		// Requires this Moodle version
+$plugin->cron		= 0;				// Period for cron to check this module (secs)
+$plugin->component	= 'mod_iadlearning';
+$plugin->maturity	= MATURITY_STABLE;
+$plugin->release	= '1.0';			// User-friendly version number
 
