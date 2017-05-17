@@ -38,7 +38,7 @@ if($ADMIN->fulltree) {
 	$title = get_string('iad_backend', 'iadlearning');
 	$description = get_string('iad_backend_help', 'iadlearning');
 	//$value = get_config('mod_iadlearning/iad_backend');
-	$setting = new admin_setting_configtext($name, $title, $description, ' ');
+	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
 	// Access Key ID
@@ -46,7 +46,7 @@ if($ADMIN->fulltree) {
 	$title = get_string('iad_access_key_id', 'iadlearning');
 	$description = get_string('iad_access_key_id_help', 'iadlearning');
 	//$value = get_config('mod_iadlearning/iad_access_key');
-	$setting = new admin_setting_configtext($name, $title, $description, ' ');
+	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
 	// Secret Access key
@@ -54,7 +54,7 @@ if($ADMIN->fulltree) {
 	$title = get_string('iad_secret_access_key', 'iadlearning');
 	$description = get_string('iad_secret_access_key_help', 'iadlearning');
 	//$value = get_config('mod_iadlearning/iad_secret_access_key');
-	$setting = new admin_setting_configtext($name, $title, $description, ' ');
+	$setting = new admin_setting_configtext($name, $title, $description, '');
 	$settings->add($setting);
 
 

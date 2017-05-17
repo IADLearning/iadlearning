@@ -115,7 +115,7 @@ class mod_iadlearning_mod_form extends moodleform_mod {
 
         if ($response_code != 200) {
 
-            $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\");
+            $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . parse_url($full_url, PHP_URL_HOST) . $full_url . $api_info_call . "\");
                 location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
 
             echo html_writer::script($script);

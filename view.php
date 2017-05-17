@@ -134,6 +134,7 @@ unset($requestparameters);
 
 // Generate Encoded Signature
 $requestparameters["accesskey"] = $access_key;
+$requestparameters["callbackURL"] = "";
 $requestparameters["course"] = $iad->iad_course;
 $requestparameters["email"] = $USER->email;
 $requestparameters["enrollmentstart"] = "";
@@ -199,7 +200,7 @@ if ($platform_id) {
 			$table->head = array(get_string('iad_test_user', 'iadlearning'), get_string('iad_test_title', 'iadlearning'), get_string('iad_test_attempts', 'iadlearning'), get_string('iad_test_score', 'iadlearning'));
 		}
 		else {
-			list($response_code, $tests) = $api_controller->iad_hhtp_get($apicall_tests, $querystring);
+			list($response_code, $tests) = $api_controller->iad_http_get($apicall_tests, $querystring);
 			$table->size = array('20%', '40%', '20%', '20%');
 			$table->head = array(get_string('iad_test_id', 'iadlearning'), get_string('iad_test_title', 'iadlearning'), get_string('iad_test_attempts', 'iadlearning'), get_string('iad_test_score', 'iadlearning'));
 		}
