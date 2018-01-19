@@ -32,14 +32,14 @@ if ($ADMIN->fulltree) {
     $name = 'iadlearning/iad_backend';
     $title = get_string('iad_backend', 'iadlearning');
     $description = get_string('iad_backend_help', 'iadlearning');
-    $setting = new admin_setting_configtext($name, $title, $description, 'https://apipro.elearningcloud.net');
+    $setting = new admin_setting_configtext($name, $title, $description, '');
     $settings->add($setting);
 
     // Access Key ID.
     $name = 'iadlearning/iad_access_key';
     $title = get_string('iad_access_key_id', 'iadlearning');
     $description = get_string('iad_access_key_id_help', 'iadlearning');
-    $setting = new admin_setting_configtext($name, $title, $description, '18be620f2bc00e7f96cae0a9bed77bcd27b53c96');
+    $setting = new admin_setting_configtext($name, $title, $description, '');
     $settings->add($setting);
 
     // Secret Access key.
@@ -47,6 +47,6 @@ if ($ADMIN->fulltree) {
     $title = get_string('iad_secret_access_key', 'iadlearning');
     $description = get_string('iad_secret_access_key_help', 'iadlearning');
 
-    $setting = new admin_setting_configtext($name, $title, $description, 'd20bc3c1649769f52932e50866f5bc67ef7aac6f');
+    $setting = new admin_setting_configtext($name, $title, $description, '');
     $settings->add($setting);
 }
