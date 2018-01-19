@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of iAdLearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,25 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
+defined('MOODLE_INTERNAL') || die();
 
 function xmldb_iad_upgrade($oldversion) {
     global $CFG, $DB;
 
     $dbman = $DB->get_manager();
 
-    if($oldversion < 2015041501) {
-    	$table = new xmldb_table('iadlearning');
-    	$field = new xmldb_field('iad_course_name', XMLDB_TYPE_CHAR, '256',null, null, null, null, null);
-
-    	if(!$dbman->field_exists($table, $field)) {
-    		// Adds the column 'iad_course_name'
-    		$dbman->add_field($table, $field);
-    	}
-
-    	upgrade_plugin_savepoint(true, 2015041501, 'mod', 'iadlearning');
+    if ($oldversion < 2015041501) {
+        $table = new xmldb_table('iadlearning');
+        $field = new xmldb_field('iad_course_name', XMLDB_TYPE_CHAR, '256', null, null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            // Adds the column 'iad_course_name'.
+            $dbman->add_field($table, $field);
+        }
+        upgrade_plugin_savepoint(true, 2015041501, 'mod', 'iadlearning');
     }
-
     return true;
 }
-?>

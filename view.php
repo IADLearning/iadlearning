@@ -18,10 +18,10 @@
  * Prints a particular instance of iadlearning
  *
  * @package     mod_iadlearning
- * @copyright   www.itoptraining.com 
+ * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date		2017-02-10
+ * @date        2017-02-10
  */
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
@@ -35,29 +35,29 @@ global $CFG, $DB, $OUTPUT, $USER, $PAGE;
 $id = optional_param('id', 0, PARAM_INT);
 
 if (!$cm = get_coursemodule_from_id('iadlearning', $id)) {
-	print_error('Course Module ID was incorrect');
+    print_error('Course Module ID was incorrect');
 }
 
-if (!$course = $DB->get_record('course', array('id'=> $cm->course))) {
-	print_error('Course is misconfigured');
+if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
+    print_error('Course is misconfigured');
 }
 
-if (!$iad = $DB->get_record('iadlearning', array('id'=> $cm->instance))) {
-	print_error('Course module is incorrect');
+if (!$iad = $DB->get_record('iadlearning', array('id' => $cm->instance))) {
+    print_error('Course module is incorrect');
 }
 
 require_login($course, true, $cm);
 $context = context_module::instance($cm->id);
-$course_context = context_course::instance($course->id);
+$coursecontext = context_course::instance($course->id);
 
 $PAGE->set_context($context);
 $PAGE->set_url('/mod/iadlearning/view.php', array('id' => $cm->id));
-$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/iadlearning/js/functions.js'), true);
-$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/iadlearning/js/jquery-1.11.2.min.js'), true);
-$PAGE->requires->css(new moodle_url('http://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css'), true);
-$PAGE->requires->js(new moodle_url ('http://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js'), true);
+$PAGE->requires->jquery();
+$PAGE->requires->jquery_plugin('ui');
+$PAGE->requires->jquery_plugin('ui-css');
+$PAGE->requires->css(new moodle_url('https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css'));
 
-/* Log View Event */
+// Log View Event.
 $event = \mod_iadlearning\event\course_module_viewed::create(array(
     'objectid' => $PAGE->cm->instance,
     'context' => $PAGE->context,
@@ -65,231 +65,170 @@ $event = \mod_iadlearning\event\course_module_viewed::create(array(
 $event->add_record_snapshot('course', $PAGE->course);
 $event->trigger();
 
-/** Check activity configuration is valid */
-if ( null == get_config('iadlearning', 'iad_backend') || null == get_config('iadlearning', 'iad_access_key') || empty(get_config('iadlearning', 'iad_secret_access_key'))) {
-
-	$script = "alert(\"" . get_string('settings_error', 'iadlearning') . "\");
-			location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
-
-	echo html_writer::script($script);
-	exit;
+// Check activity configuration is valid.
+if (null == get_config('iadlearning', 'iad_backend') || null == get_config('iadlearning', 'iad_access_key') ||
+    empty(get_config('iadlearning', 'iad_secret_access_key'))) {
+    $script = "alert(\"" . get_string('settings_error', 'iadlearning') . "\");
+            location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
+    echo html_writer::script($script);
+    exit;
 }
 
 
-//** Gather IADLearning instance information */
-$full_url = get_config('iadlearning', 'iad_backend');
+// Gather IADLearning instance information.
+$fullurl = get_config('iadlearning', 'iad_backend');
 
-$api_controller = new iad_http(parse_url($full_url, PHP_URL_SCHEME) . '://', parse_url($full_url, PHP_URL_HOST), parse_url($full_url, PHP_URL_PORT));
+$apicontroller = new iad_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
+    parse_url($fullurl, PHP_URL_HOST), parse_url($fullurl, PHP_URL_PORT));
 
-$api_info_call = '/api/v2/external/partner-info';
+$apiinfocall = '/api/v2/external/partner-info';
 $requestparameters["timestamp"] = time();
 $requestparameters["accesskey"] = get_config('iadlearning', 'iad_access_key');
-$access_key = get_config('iadlearning', 'iad_access_key');
-$secret_access_key = get_config('iadlearning', 'iad_secret_access_key');
+$accesskey = get_config('iadlearning', 'iad_access_key');
+$secretaccesskey = get_config('iadlearning', 'iad_secret_access_key');
 
-$signature = generate_signature($secret_access_key, $requestparameters);
+$signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
 $requestparameters["signature"] = $signature;
 
-$querystring = generate_url_query($requestparameters);
+$querystring = iadlearning_generate_url_query($requestparameters);
 
-list($response_code, $instance_info) = $api_controller->iad_http_get($api_info_call, $querystring);
+list($responsecode, $instanceinfo) = $apicontroller->iad_http_get($apiinfocall, $querystring);
 
-if ($response_code != 200) {
-
+if ($responsecode != 200) {
     $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\");
         location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $course->id . "\";";
-
     echo html_writer::script($script);
-
 }
-$instance_info_json = json_decode($instance_info);
+$instanceinfojson = json_decode($instanceinfo);
 
 try {
-    
-    $frontend = $instance_info_json->url;
-    $platform_id = $instance_info_json->platformId;
-
-}
-catch (Exception $e) {
-
+    $frontend = $instanceinfojson->url;
+    $platformid = $instanceinfojson->platformId;
+} catch (Exception $e) {
     $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\")";
     echo html_writer::script($script);
-
 }
 
 
-/** Find out user roles */
-$user_roles = get_user_roles($course_context, $USER->id);
-$first_role = reset($user_roles);
-switch (sizeof($user_roles)) {
-	case 0: /* User has reached the element not being enrolled - It is and admin user */
-		$rol_name = "admin";
-		break;
-	default:
-		$rol_name =  $first_role->shortname;
-		break;
+// Find out user roles.
+$userroles = get_user_roles($coursecontext, $USER->id);
+$firstrole = reset($userroles);
+switch (count($userroles)) {
+    case 0: /* User has reached the element not being enrolled - It is and admin user */
+        $rolname = "admin";
+        break;
+    default:
+        $rolname = $firstrole->shortname;
+        break;
 }
 
 unset($requestparameters);
 
-// Generate Encoded Signature
-$requestparameters["accesskey"] = $access_key;
-$requestparameters["callbackURL"] = "";
+// Generate Encoded Signature.
+$requestparameters["accesskey"] = $accesskey;
+$requestparameters["callbackURL"] = $CFG->wwwroot . "/course/view.php?id=" . $course->id;
 $requestparameters["course"] = $iad->iad_course;
 $requestparameters["email"] = $USER->email;
 $requestparameters["enrollmentstart"] = "";
 $requestparameters["enrollmentstop"] = "";
 $requestparameters['id'] = $USER->id;
-$requestparameters['role'] = $rol_name;
+$requestparameters['role'] = $rolname;
 $requestparameters["timestamp"] = time();
 $requestparameters["name"] = $USER->firstname;
 $requestparameters["lastname"] = $USER->lastname;
 $requestparameters["type"] = 1;
 
 
-// Generate URL query string for http requests to iAdLearning
-$signature = generate_signature($secret_access_key, $requestparameters);
+// Generate URL query string for http requests to iAdLearning.
+$signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
 $requestparameters["signature"] = $signature;
-$querystring = generate_url_query($requestparameters);
+$querystring = iadlearning_generate_url_query($requestparameters);
 
 
-// Script to open the activity in iAdLearning
-$front_url = $frontend . "/external/login?" . $querystring;
+// Script to open the activity in iAdLearning.
+$fronturl = $frontend . "/external/login?" . $querystring;
 
+$platformurlfound = false;
+$lastaccessfound = false;
+$testinfofound = false;
+$renderdata = new stdClass();
 
-$script = "window.open('" . $front_url . "', '_blank', 'location=no,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,width=1500,height=1000');";
+if ($platformid) {
+    $platformurlfound = true;
+    $renderdata->platformurlfound = true;
 
-$platform_url_found = false;
-$last_access_found = false;
-$test_info_found = false;
+    $apicallaccess = '/api/v2/external/' . $platformid . '/access';
+    $apicalltests = '/api/v2/external/' . $platformid . '/tests';
+    $apicallalltests = '/api/v2/external/' . $platformid . '/all';
 
+    // Request Last Access Information.
+    list($responsecode, $access) = $apicontroller->iad_http_get($apicallaccess, $querystring);
 
-/** Gather iAdLearning Platform ID */
+    if (($access) && ($responsecode == 200)) {
+        $lastaccessfound = true;
+        $renderdata->lastaccessfound = true;
+        $accessjson = json_decode($access, true);
+        if (!isset($accessjson["date"]) || is_null($accessjson["date"])) {
+            $lastaccess = get_string('iad_no_last_access', 'iadlearning');
+        } else {
+            $timestamp = strtotime($accessjson["date"]);
+            $lastaccess = userdate($timestamp);
+        }
+        $renderdata->lastaccess = $lastaccess;
 
-if ($platform_id) {
+        // Request Tests Information.
+        if (has_capability('mod/iadlearning:view_tests_report', $context)) {
+            list($responsecode, $tests) = $apicontroller->iad_http_get($apicallalltests, $querystring);
+        } else {
+            list($responsecode, $tests) = $apicontroller->iad_http_get($apicalltests, $querystring);
+        }
 
-	$platform_url_found = true;
-	
-	$apicall_access = '/api/v2/external/' . $platform_id . '/access';
-	$apicall_tests = '/api/v2/external/' . $platform_id . '/tests';
-	$apicall_all_tests = '/api/v2/external/' . $platform_id . '/all';
-
-	/** Request Last Access Information */
-	list($response_code, $access) = $api_controller->iad_http_get($apicall_access, $querystring);
-
-	if (($access) && ($response_code == 200)){
-
-		$last_access_found = true;
-		$access_json = json_decode($access, true);
-		if (!isset($access_json["date"]) || is_null($access_json["date"])) {
-			$last_access = get_string('iad_no_last_access', 'iadlearning');
-		}
-		else {
-			$timestamp = strtotime($access_json["date"]);
-			$last_access = userdate($timestamp); 
-		}
-			
-		/** Request Tests Information */
-		$table = new html_table();
-		$table->id = "tests";
-		$table->align = array('left', 'left', 'center', 'center');
-
-		if (has_capability('mod/iadlearning:view_tests_report', $context)) {
-			list($response_code, $tests) = $api_controller->iad_http_get($apicall_all_tests, $querystring);
-			$table->size = array('30%', '30%', '20%', '20%');
-			$table->head = array(get_string('iad_test_user', 'iadlearning'), get_string('iad_test_title', 'iadlearning'), get_string('iad_test_attempts', 'iadlearning'), get_string('iad_test_score', 'iadlearning'));
-		}
-		else {
-			list($response_code, $tests) = $api_controller->iad_http_get($apicall_tests, $querystring);
-			$table->size = array('20%', '40%', '20%', '20%');
-			$table->head = array(get_string('iad_test_id', 'iadlearning'), get_string('iad_test_title', 'iadlearning'), get_string('iad_test_attempts', 'iadlearning'), get_string('iad_test_score', 'iadlearning'));
-		}
-
-
-		$tests_json = json_decode($tests, true);
-		$total = count((array) $tests_json);
-
-		if ($total > 0) {
-			$test_info_found = true;
-			$tests_array = array();
-			foreach ($tests_json as $test_info) {
-				$test_info["finalScore"] = number_format($test_info["finalScore"] * 10, 2);
-				array_push($tests_array, array_values($test_info));
-			}
-			$table->data = $tests_array;
-		}
-	}
+        $testsdata = json_decode($tests, true);
+        $total = count($testsdata);
+        if ($total > 0) {
+            $renderdata->testinfofound = true;
+            $renderdata->data = $testsdata;
+        }
+    }
 }
 
+// UI Messages.
+$renderdata->coursename = $iad->name;
+$renderdata->accessurl = $fronturl;
+$renderdata->iad_access_activity = get_string('iad_access_activity', 'iadlearning');
+$renderdata->iad_activity_info = get_string('iad_activity_info', 'iadlearning');
+$renderdata->iad_last_access = get_string('iad_last_access', 'iadlearning');
+$renderdata->iad_test_info = get_string('iad_test_info', 'iadlearning');
+$renderdata->iad_test_user = get_string('iad_test_user', 'iadlearning');
+$renderdata->iad_test_id = get_string('iad_test_id', 'iadlearning');
+$renderdata->iad_test_title = get_string('iad_test_title', 'iadlearning');
+$renderdata->iad_test_attempts = get_string('iad_test_attempts', 'iadlearning');
+$renderdata->iad_test_score = get_string('iad_test_score', 'iadlearning');
 
-/*
-*   ACTUAL VIEW PAGE
-*/
 
-/** Print the page header */
+// Actual view page.
+
 echo $OUTPUT->header();
 
-echo "<br />";
-echo "<h2 style=\"text-align: center\">" . $iad->name . " </h2>" ;
-echo "<br />";
+echo $OUTPUT->render_from_template('mod_iadlearning/view', $renderdata);
 
-echo "<p style=\"text-align: center\"> <button class=\"btn btn-success\" type=\"button\" onclick=\"" . $script . "\">". get_string('iad_access_activity', 'iadlearning') ."</button> </p>";
-echo "<br />";
-echo "<h3 style=\"text-align: center\">". get_string('iad_activity_info', 'iadlearning') . "</h3>" ;
-echo "<br />";
+// Set up DataTable with passed options.
+$params = array("select" => true, "paginate" => true);
+$params['buttons'] = array("selectAll", "selectNone");
+$params['dom'] = 'Bfrtip';      // Needed to position buttons; else won't display.
+$l['search'] = get_string('iad_dt_search', 'iadlearning');
+$l['info'] = get_string('iad_dt_info', 'iadlearning');
+$l['infoEmpty'] = get_string('iad_dt_infoEmpty', 'iadlearning');
+$l['lengthMenu'] = get_string('iad_dt_lengthMenu', 'iadlearning');
+$l['first'] = get_string('iad_dt_first', 'iadlearning');
+$l['previous'] = get_string('iad_dt_previous', 'iadlearning');
+$l['next'] = get_string('iad_dt_next', 'iadlearning');
+$l['last'] = get_string('iad_dt_last', 'iadlearning');
+$l['info'] = get_string('iad_dt_info', 'iadlearning');
+$params['language'] = $l;
+$selector = '.datatable';
 
-if ($last_access_found) {
-	echo "<br />";
-	echo "<h4 style=\"text-align: left\">" . get_string('iad_last_access', 'iadlearning') . ": " . $last_access . "</h4>";
-}
-else {
-	echo "<br />";
-	echo "<h4 style=\"text-align: center\"; color: \"red\" >" . get_string('iad_last_access_unable', 'iadlearning') . "</h4>";
-}
+// Re-render table using Data Tables.
+$PAGE->requires->js_call_amd('mod_iadlearning/init-datatables', 'init', array($selector, $params));
 
-if ($test_info_found) {
-	echo "<br />";
-	echo "<h4 style=\"text-align: left\"; color: \"red\">" . get_string('iad_test_info', 'iadlearning') . ": " . "</h4>";
-	echo "<br />";
-	echo html_writer::table($table);
-
-	/** Apply datatables */
-
-	/*
-	* 	Apply DataTables JS Plugin to format and Paginate the Results Table
-	*/
-
-	/** Language Customization */
-
-	$l['search'] = get_string('iad_dt_search', 'iadlearning');
-	$l['info'] = get_string('iad_dt_info', 'iadlearning');
-	$l['infoEmpty'] = get_string('iad_dt_infoEmpty', 'iadlearning');
-	$l['lengthMenu'] = get_string('iad_dt_lengthMenu', 'iadlearning');
-
-	$language_string ="";
-	foreach ($l as $key => $value) {
-		$language_string = $language_string . $key . ":" . "\"" . $value . "\"," ;
-	}
-
-	$p['first'] = get_string('iad_dt_first', 'iadlearning');
-	$p['previous'] = get_string('iad_dt_previous', 'iadlearning');
-	$p['next'] = get_string('iad_dt_next', 'iadlearning');
-	$p['last'] = get_string('iad_dt_last', 'iadlearning');
-	$p['info'] = get_string('iad_dt_info', 'iadlearning');
-
-	$paginate_string ="";
-	foreach ($p as $key => $value) {
-		$paginate_string = $paginate_string . $key . ":" . "\"" . $value . "\"," ;
-	}
-	$l_string = $language_string . "paginate: {" . $paginate_string . "}";
-
-	/** Plugin Activation */
-	$datatables_script = "$(document).ready(function(){ $('#tests').DataTable({ language : {" . $l_string . "} }); });";
-	echo html_writer::script($datatables_script);
-
-}
-
-/** Print the page footer */
-echo $OUTPUT->footer(); 
-
-?>
+echo $OUTPUT->footer();

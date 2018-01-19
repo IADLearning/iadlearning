@@ -19,7 +19,7 @@
  * Defines the capabilities for iad module.
  *
  * @package    mod_iadlearning
- * @copyright  www.itoptraining.com 
+ * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,19 +28,16 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-   'mod/iadlearning:addinstance' => array(
+    'mod/iadlearning:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_BLOCK,
-        'archetypes' => array(	
+        'archetypes' => array(
             'manager' => CAP_ALLOW,
-        	'coursecreator' => CAP_ALLOW,
-        	'editingteacher' => CAP_ALLOW,
-        	'teacher' => CAP_PROHIBIT,
-        	'student' => CAP_PROHIBIT,
-        	'guest' => CAP_PROHIBIT
+            'coursecreator' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
         ),
-   		'clonepermissionsfrom' => 'moodle/course:manageactivities'
+        'clonepermissionsfrom' => 'moodle/course:manageactivities'
     ),
 
     'mod/iadlearning:view_tests_report' => array(
@@ -51,9 +48,7 @@ $capabilities = array(
             'manager' => CAP_ALLOW,
             'coursecreator' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-            'teacher' => CAP_ALLOW,
-            'student' => CAP_PROHIBIT,
-            'guest' => CAP_PROHIBIT
+            'teacher' => CAP_ALLOW
         )
     ),
 );

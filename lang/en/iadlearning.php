@@ -18,7 +18,7 @@
  * English strings for iad module
  *
  * @package    mod_iadlearning
- * @copyright  www.itoptraining.com 
+ * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,6 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'IADLearning';
+$string['pluginadministration'] = 'IADLearning administration';
 $string['load_courses'] = 'Load courses';
 $string['iadconnectsettings'] = 'IADLearning connection settings';
 $string['linkname'] = 'access to the course';
@@ -63,23 +64,23 @@ $string['view_failed'] = 'There was an error when connecting to the course conte
 
 $string['iad_activity'] = 'Activity';
 $string['iad_access_activity'] = 'Access Activity Content';
-$string['iad_activity_info'] = 'Activity Information';
+$string['iad_activity_info'] = 'Activity Information:';
 $string['iad_last_access'] = 'Last Access';
 $string['iad_last_access_unable'] = 'Unable to contact server to find out last access to this activity';
 $string['iad_no_last_access'] = 'NEVER';
-$string['iad_test_info'] = 'Tests Information';
+$string['iad_test_info'] = 'Tests Information:';
 $string['iad_test_no_info'] = 'No test information available yet';
 
-$string['iad_test_id'] = 'Internal Test ID';
+$string['iad_test_id'] = 'Test ID';
 $string['iad_test_title'] = 'Test Title';
-$string['iad_test_attempts'] = 'Test Number of Attempts';
-$string['iad_test_score'] = 'Tests Current Score';
+$string['iad_test_attempts'] = 'Number of Attempts';
+$string['iad_test_score'] = 'Current Score';
 
 $string['iad_test_user'] = 'User Name';
 
-$string['iad_instance_list'] = 'List of IADLearning Activities in the course';
+$string['iad_instance_list'] = 'List of IADLearning activities in the course:';
 $string['iad_instance_name'] = 'Activity Name';
-$string['iad_instance_course'] = 'Activity IADLearning Course';
+$string['iad_instance_course'] = 'IADLearning Course';
 $string['iad_instance_none'] = 'There are no IADLearning activities in this course';
 
 
@@ -92,7 +93,7 @@ $string['iad_dt_info'] = 'Showing _START_ to _END_ of _TOTAL_ elements';
 $string['iad_dt_infoEmpty'] = 'Showing 0 to 0 of 0 elements';
 $string['iad_dt_lengthMenu'] = 'Showing _MENU_ elements';
 
-$string['iad_license_info'] = 'Activity IADLearning Course';
+$string['iad_license_info'] = 'IADLearning License Information';
 $string['iad_name'] = 'Name';
 $string['iad_lastname'] = 'Lastname';
 $string['iad_email'] = 'E-mail address';
@@ -101,19 +102,18 @@ $string['iad_phone'] = 'Phone Number';
 $string['iad_credentials'] = 'IADLearning Access Credentials';
 $string['iad_username'] = 'Username';
 $string['iad_pass'] = 'Password';
-$string['iad_autoprovisioning_error'] = 'There has been an error when retreiving your credentials. Please contact info@iadlearning.com';
-$string['iad_servercontact_error'] = 'There has been an error connecting to IADLearning server. Please contact info@iadlearning.com';
+$string['iad_autoprovisioning_error'] = 'There has been an error when retreiving your credentials.';
+$string['iad_servercontact_error'] = 'There has been an error connecting to IADLearning server.';
 
-
-
-$string['iad_license_info'] = 'Activity IADLearning Course';
-$string['iad_license_info'] = 'Activity IADLearning Course';
-
+$string['iad_get_demo_keys'] = 'Obtain demo keys';
 
 $string['error_in_service'] = 'Error connecting to remote system';
+$string['format_error'] = 'This field requires a different format';
+$string['creator_id_error'] = 'The course creator ID should match your user ID';
+$string['iad_course_error'] = 'The course ID is not valid';
+$string['iad_course_name_error'] = 'The course name is not valid';
 
-// Events
+// Events.
 $string['eventACCESSACTIVITY'] = 'Access to Activity Content';
 $string['eventACCESSIADCOURSE'] = 'Access to IADLearning Course';
 $string['eventACCESSIADCOURSEdesc'] = 'User accessed the IAD Learning Course where the Moodle activity is pointing to';
-?>

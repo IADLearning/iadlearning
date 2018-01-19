@@ -1,0 +1,43 @@
+<section style="text-align: center">
+   <h2> {{coursename}} </h2>
+   <h1>
+       <a href="{{accessurl}}" class="btn btn-success" id="id_iad_access"> {{iad_access_activity}} </a>
+   </h1>
+</section>
+<section>
+    <hr>
+    <h3> {{iad_activity_info}}</h3>
+</section>
+<section>
+    {{#lastaccessfound}}
+        <h5> {{iad_last_access}}: {{lastaccess}} </h5>
+    {{/lastaccessfound}}
+</section>
+<section>
+    {{#testinfofound}}
+    <h3>{{iad_test_info}}</h3>
+    <table class="table table-striped datatable">
+        <thead>
+        <tr>
+            <th>{{iad_test_user}}</th>
+            <th>{{iad_test_id}}</th>
+            <th>{{iad_test_title}}</th>
+            <th>{{iad_test_attempts}}</th>
+            <th>{{iad_test_score}}</th>
+        </tr>
+        </thead>
+        <tbody>
+            {{#data}}
+                <tr>
+                    <td>{{userId}}</td>
+                    <td>{{testId}}</td>
+                    <td>{{title}}</td>
+                    <td>{{attempts}}</td>
+                    <td>{{finalScore}}</td>
+
+                </tr>
+            {{/data}}
+        </tbody>
+    </table>
+    {{/testinfofound}}
+</section>

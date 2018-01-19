@@ -1,0 +1,23 @@
+<section>
+    <h3>{{iad_instance_list}}</h3>
+</section>
+<section>
+    {{#instancesexist}}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>{{iad_instance_name}}</th>
+            <th>{{iad_instance_course}}</th>
+        </tr>
+        </thead>
+        <tbody>
+            {{#data}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{coursename}}</td>
+                </tr>
+            {{/data}}
+        </tbody>
+    </table>
+    {{/instancesexist}}
+</section>

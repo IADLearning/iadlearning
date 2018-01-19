@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of iadlearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -19,7 +18,7 @@
  * Handles iadlearning events
  *
  * @package     mod_iadlearning
- * @copyright   www.itoptraining.com 
+ * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @date        2017-01-26
@@ -69,7 +68,9 @@ class iadlearning_course_viewed extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return sprintf(get_string("eventACCESSIADCOURSEdesc", "mod_iadlearning"), $this->userid , $this->objectid,$this->relateduserid, $this->contextinstanceid, $this->other['error']);
+        return sprintf(get_string("eventACCESSIADCOURSEdesc", "mod_iadlearning"), $this->userid,
+            $this->objectid, $this->relateduserid,
+            $this->contextinstanceid, $this->other['error']);
     }
 
     /**
@@ -80,15 +81,15 @@ class iadlearning_course_viewed extends \core\event\base {
     public function get_url() {
         return new \moodle_url('/mod/iadlearning/view.php', array('id' => $this->courseid));
     }
-    
-    
+
     /**
      * Return the legacy event log data.
      *
      * @return array
      */
     protected function get_legacy_logdata() {
-        return array($this->courseid, 'iadlearning', get_string('eventACCESSIADCOURSE', 'mod_iadlearning'), 'view.php?id=' . $this->courseid,
+        return array($this->courseid, 'iadlearning', get_string('eventACCESSIADCOURSE',
+            'mod_iadlearning'), 'view.php?id=' . $this->courseid,
             $this->other['error'], $this->contextinstanceid);
     }
 
@@ -110,8 +111,3 @@ class iadlearning_course_viewed extends \core\event\base {
         }
     }
 }
-
-
-
-
-?>

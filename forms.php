@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of iadlearning Moodle Plugin - http://www.iadlearning.com/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -19,65 +18,61 @@
  * Forms used in iadlearning application
  *
  * @package     mod_iadlearning
- * @copyright   www.itoptraining.com 
+ * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date		2017-01-26
+ * @date        2017-01-26
  */
 
 
-if (!defined('MOODLE_INTERNAL')) {
-	die('Direct access to this script is forbidden.');    ///  It must be included from a Moodle page
-}
+defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
 class iad_get_keys_form extends moodleform {
-	
-	function definition() {
 
-		global $DB, $USER, $CFG;
+    public function definition() {
 
-		$mform =& $this->_form;
+        $mform =& $this->_form;
 
-		$mform->addElement('header', 'license', get_string('iad_license_info', 'iadlearning'));
+        $mform->addElement('header', 'license', get_string('iad_license_info', 'iadlearning'));
 
-		// nombre
-		$mform->addElement ( 'text', 'name', get_string ( 'iad_name', 'iadlearning' ), 'maxlength=255, style="width: 40%"' );
-		$mform->addRule ( 'name', null, 'required', null, 'license' );
-		$mform->setType('name', PARAM_TEXT);
+        $mform->addElement ( 'text', 'name', get_string ( 'iad_name', 'iadlearning' ),
+            'maxlength=255, style="width: 40%"' );
+        $mform->addRule ( 'name', get_string('required'), 'required', null, 'license' );
+        $mform->setType('name', PARAM_TEXT);
 
-		// surname
-		$mform->addElement ( 'text', 'lastname', get_string ( 'iad_lastname', 'iadlearning' ), 'maxlength=255, style="width: 40%"' );
-		$mform->addRule ( 'lastname', null, 'required', null, 'license' );
-		$mform->setType('lastname', PARAM_TEXT);
+        $mform->addElement ( 'text', 'lastname', get_string ( 'iad_lastname', 'iadlearning' ),
+            'maxlength=255, style="width: 40%"' );
+        $mform->addRule ( 'lastname', get_string('required'), 'required', null, 'license' );
+        $mform->setType('lastname', PARAM_TEXT);
 
-		// email
-		$mform->addElement ( 'text', 'email', get_string ( 'iad_email', 'iadlearning' ), 'maxlength=255, style="width: 40%"' );
-		$mform->addRule ( 'email', null, 'required', null, 'license' );
-		$mform->setType('email', PARAM_TEXT);
-		
-		// password
-		$mform->addElement ( 'text', 'institution', get_string ( 'iad_institution', 'iadlearning' ), 'maxlength=255, style="width: 40%"' );
-		$mform->addRule ( 'institution', null, 'required', null, 'license' );
-		$mform->setType('institution', PARAM_TEXT);
-		
-		// consumer key
-		$mform->addElement ( 'text', 'phone', get_string ( 'iad_phone', 'iadlearning' ), 'maxlength=255, style="width: 40%"' );
-		$mform->addRule ( 'phone', null, 'required', null, 'license' );
-		$mform->setType('phone', PARAM_TEXT);
+        $mform->addElement ( 'text', 'email', get_string ( 'iad_email', 'iadlearning' ),
+            'maxlength=255, style="width: 40%"' );
+        $mform->addRule ( 'email', get_string('required'), 'required', null, 'license' );
+        $mform->addRule ( 'email', get_string('format_error', 'iadlearning'), 'email', null, 'license' );
+        $mform->setType('email', PARAM_TEXT);
 
-		$mform->addElement ( 'hidden', 'id' );
-		$mform->setType('id', PARAM_INT);
+        $mform->addElement ( 'text', 'institution', get_string ( 'iad_institution', 'iadlearning' ),
+            'maxlength=255, style="width: 40%"' );
+        $mform->addRule ( 'institution', get_string('required'), 'required', null, 'license' );
+        $mform->setType('institution', PARAM_TEXT);
 
-		// buttons
-		$this->add_action_buttons();
+        $mform->addElement ( 'text', 'phone', get_string ( 'iad_phone', 'iadlearning' ),
+            'maxlength=255, style="width: 40%"' );
+        $mform->addRule ( 'phone', get_string('required'), 'required', null, 'license' );
+        $mform->setType('phone', PARAM_TEXT);
 
-	}
+        $mform->addElement ( 'hidden', 'id' );
+        $mform->setType('id', PARAM_INT);
 
-	function validation($data, $files){
-		$errors = parent::validation($data, $files);
+        $this->add_action_buttons();
 
-		return $errors;
-	}
+    }
+
+    public function validation($data, $files) {
+
+        $errors = parent::validation($data, $files);
+        return $errors;
+    }
 }

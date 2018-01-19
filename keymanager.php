@@ -18,10 +18,10 @@
  * Requests Access Keys for IADLearning
  *
  * @package     mod_iadlearning
- * @copyright   www.itoptraining.com 
+ * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date		2017-01-26
+ * @date        2017-01-26
  */
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
@@ -39,97 +39,60 @@ require_login();
 $context = context_user::instance($USER->id);
 $PAGE->set_context($context);
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_url('/mod/iadlearning/view.php');
-$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/iadlearning/js/functions.js'), true);
-$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/iadlearning/js/jquery-1.11.2.min.js'), true);
-$PAGE->requires->css(new moodle_url('http://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css'), true);
-$PAGE->requires->js(new moodle_url ('http://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js'), true);
+$PAGE->set_url('/mod/iadlearning/keymanager.php');
 
-$settings_url = new moodle_url($CFG->wwwroot . '/admin/settings.php?section=modsettingiadlearning');
+$settingsurl = new moodle_url($CFG->wwwroot . '/admin/settings.php?section=modsettingiadlearning');
 
-
-// /* Log View Event */
-// $event = \mod_iadlearning\event\course_module_viewed::create(array(
-//     'objectid' => $PAGE->cm->instance,
-//     'context' => $PAGE->context,
-// ));
-// $event->add_record_snapshot('course', $PAGE->course);
-// $event->trigger();
-
-$user_data = false;
+$userdata = false;
 $mform = new iad_get_keys_form();
 
 if ($mform->is_cancelled()) {
 
-	redirect($settings_url);
+    redirect($settingsurl);
 
 } else if ($fromform = $mform->get_data()) {
 
-	$protocol = 'https://';
-	$key_manager = 'keymanager.elearningcloud.net';
-	$port = 443;
-  	$api_controller = new iad_http($protocol, $key_manager, $port);
-  	$api_call = '/api/v2/external/key-provisioning';
+    $protocol = 'https://';
+    $keymanager = 'keymanager.elearningcloud.net';
+    $port = 443;
+    $apicontroller = new iad_http($protocol, $keymanager, $port);
+    $apicall = '/api/v2/external/key-provisioning';
 
-  	//** Populate remainding fields required to get the key */
-  	$form_data = new stdClass();
-  	$form_data = $mform->get_data();
+    // Populate remainding fields required to get the key.
+    $formdata = new stdClass();
+    $formdata = $mform->get_data();
 
-  	unset($form_data->id);
-	$form_data->role = "Demo-Admin";
-	$form_data->url =  $_SERVER['HTTP_HOST'];
+    unset($formdata->id);
+    $formdata->role = "Demo-Admin";
+    $formdata->url = $_SERVER['HTTP_HOST'];
 
-	unset($form_data->submitbutton);
+    unset($formdata->submitbutton);
 
-  	list($return_code, $key_info) = $api_controller->iad_http_post($api_call, $form_data);
+    list($returncode, $keyinfo) = $apicontroller->iad_http_post($apicall, $formdata);
 
-  	if ($return_code == 200) {
-
-  		$key_info_json = json_decode($key_info, true);
-
-  		try {
-
-	  		set_config('iad_backend', $key_info_json["api"], 'iadlearning');
-	  		set_config('iad_access_key', $key_info_json["keys"]["accessKey"], 'iadlearning');
-	  		set_config('iad_secret_access_key', $key_info_json["keys"]["secretAccessKey"], 'iadlearning');
-	  		set_config('iad_access_siteid', $key_info_json["keys"]["siteId"], 'iadlearning');
-	  		set_config('iad_access_role', $key_info_json["keys"]["role"], 'iadlearning');
-	  		set_config('iad_access_method', 'autoprovisioning', 'iadlearning');
-	  
-	  	}
-
-  		catch (Exception $e) {
-
-  			$script = "alert(\"" . get_string('iad_provisioning_error', 'iadlearning') . "\")";
-  			echo html_writer::script($script);
-
-  		}
-
-  		redirect($settings_url);
-
-  	}
-
-  	else {
-
-  		$script = "alert(\"" . get_string('iad_provisioning_error', 'iadlearning') . "\")";
-  		echo html_writer::script($script);
-  		redirect($settings_url);
-
-  	}
-
-	
-
+    if ($returncode == 200) {
+        $keyinfojson = json_decode($keyinfo, true);
+        try {
+            set_config('iad_backend', $keyinfojson["api"], 'iadlearning');
+            set_config('iad_access_key', $keyinfojson["keys"]["accessKey"], 'iadlearning');
+            set_config('iad_secret_access_key', $keyinfojson["keys"]["secretAccessKey"], 'iadlearning');
+            set_config('iad_access_siteid', $keyinfojson["keys"]["siteId"], 'iadlearning');
+            set_config('iad_access_role', $keyinfojson["keys"]["role"], 'iadlearning');
+            set_config('iad_access_method', 'autoprovisioning', 'iadlearning');
+        } catch (Exception $e) {
+            $script = "alert(\"" . get_string('iad_provisioning_error', 'iadlearning') . "\")";
+            echo html_writer::script($script);
+        }
+        redirect($settingsurl);
+    } else {
+        $script = "alert(\"" . get_string('iad_provisioning_error', 'iadlearning') . "\")";
+        echo html_writer::script($script);
+        redirect($settingsurl);
+    }
 } else {
+    echo $OUTPUT->header();
 
+    $mform->display();
 
-  echo $OUTPUT->header();
-
-  $mform->display();
-
-  echo $OUTPUT->footer();
-
+    echo $OUTPUT->footer();
 }
-
-
-
-?>

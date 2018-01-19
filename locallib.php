@@ -18,70 +18,67 @@
  *
  *
  * @package    mod_iadlearning
- * @copyright  www.itoptraining.com 
+ * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
 
+function iadlearning_sha1_hmac($key, $data, $blocksize = 64, $opad = 0x5c, $ipad = 0x36) {
 
-function sha1_hmac($key, $data, $blockSize = 64, $opad = 0x5c, $ipad = 0x36) {
+    // Keys longer than blocksize are shortened.
+    if (strlen($key) > $blocksize) {
+        $key = sha1($key, true);
+    }
 
-	// Keys longer than blocksize are shortened
-	if (strlen($key) > $blockSize) {
-		$key = sha1($key, true);
-	}
+    // Keys shorter than blocksize are right, zero-padded (concatenated)
+    // 'str_pad' pads a string to a certain length with another string.
+    $key       = str_pad($key, $blocksize, chr(0x00), STR_PAD_RIGHT);
+    $okeypad = $ikeypad = '';
 
-	// Keys shorter than blocksize are right, zero-padded (concatenated)
-	//	'str_pad' pads a string to a certain length with another string
-	$key       = str_pad($key, $blockSize, chr(0x00), STR_PAD_RIGHT);
-	$o_key_pad = $i_key_pad = '';
+    for ($i = 0; $i < $blocksize; $i++) {
+        // Variable 'ord' returns ASCII value of character.
+        // Variable 'chr' returns a one-character string containing the character specified by ASCII.
+        $okeypad .= chr( ord( substr($key, $i, 1)) ^ $opad);
+        $ikeypad .= chr( ord( substr($key, $i, 1)) ^ $ipad);
+    }
 
-	for($i = 0; $i < $blockSize; $i++) {
-		// 'ord' returns ASCII value of character
-		//	'chr' returns a one-character string containing the character specified by ASCII
-		$o_key_pad .= chr( ord( substr($key, $i, 1)) ^ $opad);
-		$i_key_pad .= chr( ord( substr($key, $i, 1)) ^ $ipad);
-	}
-
-	return sha1($o_key_pad . sha1($i_key_pad . $data, true), true);
+    return sha1($okeypad . sha1($ikeypad . $data, true), true);
 }
 
 
 
-function generate_signature($secretAccessKey, $requestparameters) {
+function iadlearning_generate_signature($secretaccesskey, $requestparameters) {
 
-	$signaturebase="";
+    $signaturebase = "";
 
-	// Order query params in alphabetical order and create string to sign
+    // Order query params in alphabetical order and create string to sign.
 
-	ksort($requestparameters);
-	foreach ($requestparameters as $key => $value) {
-		$signaturebaselenght = strlen($signaturebase);
-		if ($signaturebaselenght > 0) {
-			$signaturebase.="&";
-		}
-		$signaturebase.=urlencode($key)."=".urlencode($value);
-	}
-	$signaturebase = preg_replace('/[+]/', '%20', $signaturebase);
-	return base64_encode(sha1_hmac(urlencode($secretAccessKey), $signaturebase));
+    ksort($requestparameters);
+    foreach ($requestparameters as $key => $value) {
+        $signaturebaselenght = strlen($signaturebase);
+        if ($signaturebaselenght > 0) {
+            $signaturebase .= "&";
+        }
+        $signaturebase .= urlencode($key)."=".urlencode($value);
+    }
+    $signaturebase = preg_replace('/[+]/', '%20', $signaturebase);
+    return base64_encode(iadlearning_sha1_hmac(urlencode($secretaccesskey), $signaturebase));
 }
 
 
 
-function generate_url_query($requestparameters) {
+function iadlearning_generate_url_query($requestparameters) {
 
-	$querystring="";
-	foreach ($requestparameters as $key => $value) {
-		$querystringlength = strlen($querystring);
-		if ($querystringlength > 0) {
-			$querystring.="&";
-		}
-		$querystring.=urlencode($key)."=".urlencode($value);
-		$querystring = preg_replace('/[+]/', '%20', $querystring);
-	}
-	return $querystring;
+    $querystring = "";
+    foreach ($requestparameters as $key => $value) {
+        $querystringlength = strlen($querystring);
+        if ($querystringlength > 0) {
+            $querystring .= "&";
+        }
+        $querystring .= urlencode($key)."=".urlencode($value);
+        $querystring = preg_replace('/[+]/', '%20', $querystring);
+    }
+    return $querystring;
 }
-
-
-?>

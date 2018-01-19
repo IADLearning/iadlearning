@@ -19,20 +19,18 @@
  * Defines the version of iadlearning module
  *
  * @package    mod_iadlearning
- * @copyright  www.itoptraining.com 
+ * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-global $CFG;
-
 defined('MOODLE_INTERNAL') || die();
 
+global $CFG;
 
-$plugin->version	= 2017040601;		// The current module version (Date: YYYYMMDDXX)
-$plugin->requires	= 2012120311;		// Requires this Moodle version
-$plugin->cron		= 0;				// Period for cron to check this module (secs)
-$plugin->component	= 'mod_iadlearning';
-$plugin->maturity	= MATURITY_STABLE;
-$plugin->release	= '1.0';			// User-friendly version number
-
+$plugin->version = 2018011901;          // The current module version (Date: YYYYMMDDXX).
+$plugin->requires = 2015051100;         // Requires this Moodle version.
+$plugin->cron = 0;                 // Period for cron to check this module (secs).
+$plugin->component = 'mod_iadlearning';
+$plugin->maturity = MATURITY_STABLE;
+$plugin->release = '1.5';            // User-friendly version number.
