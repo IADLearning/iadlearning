@@ -28,9 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
 
-$plugin->version = 2018012201;          // The current module version (Date: YYYYMMDDXX).
+$plugin->version = 2018012202;          // The current module version (Date: YYYYMMDDXX).
 $plugin->requires = 2015051100;         // Requires this Moodle version.
 $plugin->cron = 0;                 // Period for cron to check this module (secs).
 $plugin->component = 'mod_iadlearning';
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.5.1';            // User-friendly version number.
+$plugin->release = '1.5.2';            // User-friendly version number.
