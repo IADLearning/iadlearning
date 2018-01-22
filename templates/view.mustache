@@ -4,15 +4,33 @@
 
 Provides access to IADLearning type of activities.
 
+Example context (json):
+{
+"iad_access_activity" : "Access Activity Content",
+"iad_activity_info" : "Activity Information",
+"lastaccessfound" : true,
+"iad_last_access" : "Last Access",
+"lastaccess" : "Sep 15, 2017, 17:22",
+"testinfofound" : true,
+"iad_test_info": "Tests Information",
+"iad_test_user" : "User Name",
+"iad_test_id" : "Test ID",
+"iad_test_title" : "Test Title",
+"iad_test_attempts" : "Number of Attempts",
+"iad_test_score" : "Current Score",
+"data" : [{"userId" : "pgomez@gmail.com", "testId" : "4baa56f1230048567300485c", "title" : "Initial Test",
+            "attempts" : 2, "finalScore" : 7.89}]
+}
+
 }}
 
 
 <section style="text-align: center">
-   <h2> {{coursename}}. </h2>
-   <h1> <a href="{{accessurl}}" class="btn btn-success" id="id_iad_access"> {{iad_access_activity}} </a> </h1>
+   <h2> Activity: {{coursename}} </h2>
+   <h1> <a href="{{accessurl}}" class="btn btn-success" id="id_iad_access"> {{iad_access_activity}} -></a> </h1>
+   <hr>
 </section>
 <section>
-    <hr>
     <h3> {{iad_activity_info}}: </h3>
 </section>
 <section>

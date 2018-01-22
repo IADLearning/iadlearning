@@ -65,11 +65,11 @@ $string['view_failed'] = 'There was an error when connecting to the course conte
 
 $string['iad_activity'] = 'Activity';
 $string['iad_access_activity'] = 'Access Activity Content';
-$string['iad_activity_info'] = 'Activity Information:';
+$string['iad_activity_info'] = 'Activity Information';
 $string['iad_last_access'] = 'Last Access';
 $string['iad_last_access_unable'] = 'Unable to contact server to find out last access to this activity';
 $string['iad_no_last_access'] = 'NEVER';
-$string['iad_test_info'] = 'Tests Information:';
+$string['iad_test_info'] = 'Tests Information';
 $string['iad_test_no_info'] = 'No test information available yet';
 
 $string['iad_test_id'] = 'Test ID';
