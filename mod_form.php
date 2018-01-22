@@ -44,35 +44,29 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         global $CFG, $COURSE, $USER, $DB, $PAGE;
 
         $update = optional_param('update', 0, PARAM_INT);
-
         $mform = $this->_form;
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
-
         // Activity name.
         $mform->addElement('text', 'name', get_string('name'), array(
                 'style' => 'width: 40%'
         ));
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', get_string('required'), 'required', null, 'client', true);
-
         // Activity description.
         $this->standard_intro_elements(false, get_string('description'));
         $mform->addElement('header', 'iadconnectsettings', get_string('iadconnectsettings', 'iadlearning'));
-
         // Email.
         $mform->addElement('text', 'email', get_string('email'), array(
                 'style' => 'width: 40%'
         ));
         $mform->setType('email', PARAM_EMAIL);
         $mform->addRule('email', get_string('format_error', 'iadlearning'), 'email', null, 'client', true);
-
         // Password.
         $mform->addElement('passwordunmask', 'password', get_string('password'), array(
                 'style' => 'width: 40%'
         ));
         $mform->setType('password', PARAM_TEXT);
-
         // Check activity configuration is valid.
         if ( null == get_config('iadlearning', 'iad_backend') ||
             null == get_config('iadlearning', 'iad_access_key') ||
@@ -82,19 +76,13 @@ class mod_iadlearning_mod_form extends moodleform_mod {
             echo html_writer::script($script);
             exit;
         }
-
-        // Gather IADLearning instance information.
-        // Instance to use for the configured keys.
         $fullurl = get_config('iadlearning', 'iad_backend');
-
         $apicontroller = new iadlearning_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
             parse_url($fullurl, PHP_URL_HOST), parse_url($fullurl, PHP_URL_PORT));
-
         $apiinfocall = '/api/v2/external/partner-info';
         $requestparameters["timestamp"] = time();
         $requestparameters["accesskey"] = get_config('iadlearning', 'iad_access_key');
         $secretaccesskey = get_config('iadlearning', 'iad_secret_access_key');
-
         $signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
         $requestparameters["signature"] = $signature;
 
@@ -120,7 +108,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
             'style' => 'width: 25%; line-height: 20px; cursor: pointer; float: left; margin-left: 7%'
         ));
         $PAGE->requires->js_call_amd('mod_iadlearning/iadlearning', 'init', array($fullurl, $platformid));
-
         // Course selected previously.
         if ($update != 0) {
             $mform->addElement('static', 'selected_course', get_string('selected_course',
@@ -135,7 +122,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
             }
             $mform->setDefault('selected_course', "($selectedcourse)");
         }
-
         // Courses.
         $mform->addElement('select', 'select_course', get_string('select_course',
             'iadlearning'), array('-1' => get_string('choose')), array(
@@ -143,7 +129,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
                 'disabled'
         ));
 
-        // Hidden fields.
         $mform->addElement('hidden', 'creator_id', $USER->id);
         $mform->setType('creator_id', PARAM_INT);
         $mform->addElement('hidden', 'iad_course', '', array('id' => 'id_iad_course'));
@@ -151,9 +136,7 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         $mform->addElement('hidden', 'iad_course_name', '', array('id' => 'id_iad_course_name'));
         $mform->setType('iad_course_name', PARAM_TEXT);
 
-        // Add standard elements, common to all modules.
         $this->standard_coursemodule_elements();
-        // Add standard buttons, common to all modules.
         $this->add_action_buttons();
     }
 
