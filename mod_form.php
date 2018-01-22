@@ -74,7 +74,7 @@ class mod_iadlearning_mod_form extends moodleform_mod {
             $script = "alert(\"" . get_string('settings_error', 'iadlearning') . "\");
                 location.href = \"" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "\";";
             echo html_writer::script($script);
-            exit;
+            return;
         }
         $fullurl = get_config('iadlearning', 'iad_backend');
         $apicontroller = new iadlearning_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
