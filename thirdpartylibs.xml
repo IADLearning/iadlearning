@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <libraries>
     <library>
-        <location>amd/src/datatables.js</location>
-        <name>DataTables</name>
-        <license>MIT</license>
-        <version>1.10.9</version>
-    </library>
-    <library>
         <location>amd/src/buttons.bootstrap.js</location>
         <name>DataTables</name>
         <license>MIT</license>
