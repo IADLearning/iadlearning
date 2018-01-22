@@ -32,7 +32,6 @@ defined('MOODLE_INTERNAL') || die();
 class restore_iadlearning_activity_structure_step extends restore_activity_structure_step {
     protected function define_structure() {
         $paths = array();
-        $userinfo = $this->get_setting_value('userinfo');
         $paths[] = new restore_path_element('iadlearning', '/activity/iadlearning');
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
@@ -40,7 +39,6 @@ class restore_iadlearning_activity_structure_step extends restore_activity_struc
     protected function process_iadlearning($data) {
         global $DB;
         $data = (object)$data;
-        $oldid = $data->id;
         $data->course = $this->get_courseid();
         // Any changes to the list of dates that needs to be rolled should be same during course restore and course reset.
         // See MDL-9367.

@@ -90,12 +90,12 @@ function iadlearning_delete_instance($id) {
     global $DB;
 
     // Ensure the iad exists.
-    if (!$iad = $DB->get_record('iadlearning', array('id' => $id))) {
+    if (!$DB->get_record('iadlearning', array('id' => $id))) {
         return false;
     }
 
     // Prepare file record object.
-    if (!$cm = get_coursemodule_from_instance('iadlearning', $id)) {
+    if (!get_coursemodule_from_instance('iadlearning', $id)) {
         return false;
     }
 

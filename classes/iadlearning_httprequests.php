@@ -58,7 +58,7 @@ class iadlearning_http {
     }
 
 
-    public function iadlearning_http_post($apicall, $fields = null, $querystring = null) {
+    public function iadlearning_http_post($apicall, $fields = null) {
 
         $finalurl = $this->protocol . $this->url . ":" . $this->port . $apicall;
 

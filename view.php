@@ -90,8 +90,6 @@ $secretaccesskey = get_config('iadlearning', 'iad_secret_access_key');
 $signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
 $requestparameters["signature"] = $signature;
 
-//$querystring = iadlearning_generate_url_query($requestparameters);
-
 list($responsecode, $instanceinfo) = $apicontroller->iadlearning_http_get($apiinfocall, $requestparameters);
 
 if ($responsecode != 200) {

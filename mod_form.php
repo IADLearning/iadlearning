@@ -43,8 +43,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
     public function definition() {
         global $CFG, $COURSE, $USER, $DB, $PAGE;
 
-        $platform = null;
-        $url = null;
         $update = optional_param('update', 0, PARAM_INT);
 
         $mform = $this->_form;
@@ -100,8 +98,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         $signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
         $requestparameters["signature"] = $signature;
 
-        // $querystring = iadlearning_generate_url_query($requestparameters);
-
         list($responsecode, $instanceinfo) = $apicontroller->iadlearning_http_get($apiinfocall, $requestparameters);
 
         if ($responsecode != 200) {
@@ -114,7 +110,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         $instanceinfojson = json_decode($instanceinfo);
 
         try {
-            $frontend = $instanceinfojson->url;
             $platformid = $instanceinfojson->platformId;
         } catch (Exception $e) {
             $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\")";
@@ -171,8 +166,8 @@ class mod_iadlearning_mod_form extends moodleform_mod {
      *
      * @return string $errors
      */
-    public function validation($data, $files) {
-        global $CFG, $COURSE, $USER, $DB, $PAGE;
+    public function validation($data) {
+        global $USER;
 
         $errors = array();
         if ($data['creator_id'] != $USER->id) {

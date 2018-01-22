@@ -20,9 +20,6 @@ class backup_iadlearning_activity_structure_step extends backup_activity_structu
 
     protected function define_structure() {
 
-        // To know if we are including userinfo.
-        $userinfo = $this->get_setting_value('userinfo');
-
         // Define each element separated.
         $iadlearning = new backup_nested_element('iadlearning', array('id'), array(
             'name', 'intro', 'introformat', 'timecreated',
@@ -37,7 +34,7 @@ class backup_iadlearning_activity_structure_step extends backup_activity_structu
         $iadlearning->annotate_ids('user', 'creator_id');
 
         // Define file annotations.
-        $iadlearning->annotate_files('mod_iadlearning', 'intro', null, $contextid = null);
+        $iadlearning->annotate_files('mod_iadlearning', 'intro', null, null);
 
         // Return the root element (iadlearning), wrapped into standard activity structure.
         return $this->prepare_activity_structure($iadlearning);

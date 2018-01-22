@@ -17,7 +17,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 function xmldb_iadlearning_upgrade($oldversion) {
-    global $CFG, $DB;
+    global $DB;
 
     $dbman = $DB->get_manager();
 
