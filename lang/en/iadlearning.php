@@ -34,6 +34,7 @@ $string['modulename'] = 'IADLearning';
 $string['modulenameplural'] = 'IADLearning';
 $string['modulename_help'] = 'This module enables access to IADLearning from Moodle.';
 $string['pluginadministration'] = 'IAD Administration';
+$string['iadlearning:addinstance'] = 'Add IADLearning activity';
 $string['select_course'] = 'Select course';
 $string['iad_ip'] = 'IP address';
 $string['iad_ip_help'] = 'IADLearning\'s IP address.';

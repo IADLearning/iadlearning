@@ -1,12 +1,19 @@
+{{!
+
+@template mod_iadlearning/view
+
+Provides access to IADLearning type of activities.
+
+}}
+
+
 <section style="text-align: center">
-   <h2> {{coursename}} </h2>
-   <h1>
-       <a href="{{accessurl}}" class="btn btn-success" id="id_iad_access"> {{iad_access_activity}} </a>
-   </h1>
+   <h2> {{coursename}}. </h2>
+   <h1> <a href="{{accessurl}}" class="btn btn-success" id="id_iad_access"> {{iad_access_activity}} </a> </h1>
 </section>
 <section>
     <hr>
-    <h3> {{iad_activity_info}}</h3>
+    <h3> {{iad_activity_info}}: </h3>
 </section>
 <section>
     {{#lastaccessfound}}
@@ -15,7 +22,7 @@
 </section>
 <section>
     {{#testinfofound}}
-    <h3>{{iad_test_info}}</h3>
+    <h3>{{iad_test_info}}:</h3>
     <table class="table table-striped datatable">
         <thead>
         <tr>
