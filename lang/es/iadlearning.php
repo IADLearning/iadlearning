@@ -108,6 +108,7 @@ $string['format_error'] = 'Este campo requiere un formato distinto';
 $string['creator_id_error'] = 'El creador del curso y su ID de usuario deben coincidir';
 $string['iad_course_error'] = 'El identificador del curso no es válido';
 $string['iad_course_name_error'] = 'El nombre del curso no es válido';
+$string['iad_provisioning_error'] = 'No se han podido generar las claves de demo. Contacte con info@itoptraining.com';
 
 // Events.
 $string['eventACCESSACTIVITY'] = 'Acceso al Contenido de la Actividad';

@@ -28,7 +28,7 @@ require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
 require_once(dirname(__FILE__) . '/lib.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 require_once($CFG->libdir . '/pagelib.php');
-require(dirname(__FILE__) . '/classes/iad_httprequests.php');
+require(dirname(__FILE__) . '/classes/iadlearning_httprequests.php');
 
 global $CFG, $DB, $OUTPUT, $USER, $PAGE;
 
@@ -78,7 +78,7 @@ if (null == get_config('iadlearning', 'iad_backend') || null == get_config('iadl
 // Gather IADLearning instance information.
 $fullurl = get_config('iadlearning', 'iad_backend');
 
-$apicontroller = new iad_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
+$apicontroller = new iadlearning_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
     parse_url($fullurl, PHP_URL_HOST), parse_url($fullurl, PHP_URL_PORT));
 
 $apiinfocall = '/api/v2/external/partner-info';
@@ -90,9 +90,9 @@ $secretaccesskey = get_config('iadlearning', 'iad_secret_access_key');
 $signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
 $requestparameters["signature"] = $signature;
 
-$querystring = iadlearning_generate_url_query($requestparameters);
+//$querystring = iadlearning_generate_url_query($requestparameters);
 
-list($responsecode, $instanceinfo) = $apicontroller->iad_http_get($apiinfocall, $querystring);
+list($responsecode, $instanceinfo) = $apicontroller->iadlearning_http_get($apiinfocall, $requestparameters);
 
 if ($responsecode != 200) {
     $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\");
@@ -162,7 +162,7 @@ if ($platformid) {
     $apicallalltests = '/api/v2/external/' . $platformid . '/all';
 
     // Request Last Access Information.
-    list($responsecode, $access) = $apicontroller->iad_http_get($apicallaccess, $querystring);
+    list($responsecode, $access) = $apicontroller->iadlearning_http_get($apicallaccess, $requestparameters);
 
     if (($access) && ($responsecode == 200)) {
         $lastaccessfound = true;
@@ -178,9 +178,9 @@ if ($platformid) {
 
         // Request Tests Information.
         if (has_capability('mod/iadlearning:view_tests_report', $context)) {
-            list($responsecode, $tests) = $apicontroller->iad_http_get($apicallalltests, $querystring);
+            list($responsecode, $tests) = $apicontroller->iadlearning_http_get($apicallalltests, $requestparameters);
         } else {
-            list($responsecode, $tests) = $apicontroller->iad_http_get($apicalltests, $querystring);
+            list($responsecode, $tests) = $apicontroller->iadlearning_http_get($apicalltests, $requestparameters);
         }
 
         $testsdata = json_decode($tests, true);

@@ -26,7 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-class iad_http {
+class iadlearning_http {
 
     public function __construct($protocol, $url, $port) {
 
@@ -36,56 +36,43 @@ class iad_http {
 
     }
 
-
-    public function iad_http_get($apicall, $querystring = null) {
+    public function iadlearning_http_get($apicall, $requestparameters = array()) {
 
         $finalurl = $this->protocol . $this->url . ":" . $this->port . $apicall;
-        if ($querystring) {
-            $finalurl = $finalurl . '?' . $querystring;
-        }
         try {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $finalurl );
-            curl_setopt($ch, CURLOPT_VERBOSE, 1 );
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            if (!$response = curl_exec($ch)) {
-                trigger_error(curl_error($ch));
+            $c = new curl;
+            $response = $c->get($finalurl, $requestparameters);
+            $info = $c->get_info();
+            $errorno = $c->get_errno();
+            if (!$errorno) {
+                $responsecode = $info["http_code"];
+                return array($responsecode, $response);
+            } else {
+                return array($errorno, $response);
             }
-            $responsecode = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-            curl_close($ch);
-            return array($responsecode, $response);
         } catch (Exception $e) {
             $errorexecption = $e->getMessage();
             $errormsg = get_string('error_in_service', 'iad'). " " . $errorexecption;
             print_error($errormsg);
         }
-
     }
 
 
-
-    public function iad_http_post($apicall, $fields = null, $querystring = null) {
+    public function iadlearning_http_post($apicall, $fields = null, $querystring = null) {
 
         $finalurl = $this->protocol . $this->url . ":" . $this->port . $apicall;
-        if ($querystring) {
-            $finalurl = $finalurl . '?' . $querystring;
-        }
-        $data = json_encode($fields);
 
         try {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $finalurl );
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-            curl_setopt($ch, CURLOPT_VERBOSE, 1 );
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            if (!$response = curl_exec($ch)) {
-                trigger_error(curl_error($ch));
+            $c = new curl;
+            $response = $c->post($finalurl, $fields, array('CURLOPT_HTTPHEADER' => "Content-type: application/json"));
+            $info = $c->get_info();
+            $errorno = $c->get_errno();
+            if (!$errorno) {
+                $responsecode = $info["http_code"];
+                return array($responsecode, $response);
+            } else {
+                return array($errorno, $response);
             }
-            $responsecode = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-            curl_close($ch);
             return array($responsecode, $response);
         } catch (Exception $e) {
             $errorexecption = $e->getMessage();

@@ -33,7 +33,7 @@ require_login();
 require_once(dirname(__FILE__).'/lib.php');
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once('locallib.php');
-require(dirname(__FILE__) . '/classes/iad_httprequests.php');
+require(dirname(__FILE__) . '/classes/iadlearning_httprequests.php');
 
 
 class mod_iadlearning_mod_form extends moodleform_mod {
@@ -89,7 +89,7 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         // Instance to use for the configured keys.
         $fullurl = get_config('iadlearning', 'iad_backend');
 
-        $apicontroller = new iad_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
+        $apicontroller = new iadlearning_http(parse_url($fullurl, PHP_URL_SCHEME) . '://',
             parse_url($fullurl, PHP_URL_HOST), parse_url($fullurl, PHP_URL_PORT));
 
         $apiinfocall = '/api/v2/external/partner-info';
@@ -100,9 +100,9 @@ class mod_iadlearning_mod_form extends moodleform_mod {
         $signature = iadlearning_generate_signature($secretaccesskey, $requestparameters);
         $requestparameters["signature"] = $signature;
 
-        $querystring = iadlearning_generate_url_query($requestparameters);
+        // $querystring = iadlearning_generate_url_query($requestparameters);
 
-        list($responsecode, $instanceinfo) = $apicontroller->iad_http_get($apiinfocall, $querystring);
+        list($responsecode, $instanceinfo) = $apicontroller->iadlearning_http_get($apiinfocall, $requestparameters);
 
         if ($responsecode != 200) {
             $script = "alert(\"" . get_string('iad_servercontact_error', 'iadlearning') . "\\n" .

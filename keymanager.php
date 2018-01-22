@@ -29,7 +29,7 @@ require_once(dirname(__FILE__) . '/forms.php');
 require_once(dirname(__FILE__) . '/lib.php');
 require_once(dirname(__FILE__) . '/locallib.php');
 require_once($CFG->libdir . '/pagelib.php');
-require_once(dirname(__FILE__) . '/classes/iad_httprequests.php');
+require_once(dirname(__FILE__) . '/classes/iadlearning_httprequests.php');
 
 global $CFG, $DB, $OUTPUT, $USER, $PAGE;
 
@@ -55,7 +55,7 @@ if ($mform->is_cancelled()) {
     $protocol = 'https://';
     $keymanager = 'keymanager.elearningcloud.net';
     $port = 443;
-    $apicontroller = new iad_http($protocol, $keymanager, $port);
+    $apicontroller = new iadlearning_http($protocol, $keymanager, $port);
     $apicall = '/api/v2/external/key-provisioning';
 
     // Populate remainding fields required to get the key.
@@ -68,7 +68,7 @@ if ($mform->is_cancelled()) {
 
     unset($formdata->submitbutton);
 
-    list($returncode, $keyinfo) = $apicontroller->iad_http_post($apicall, $formdata);
+    list($returncode, $keyinfo) = $apicontroller->iadlearning_http_post($apicall, $formdata);
 
     if ($returncode == 200) {
         $keyinfojson = json_decode($keyinfo, true);
