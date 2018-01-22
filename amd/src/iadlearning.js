@@ -17,7 +17,6 @@
 define(['jquery'], function($) {
 
     var api = '/api/v2';
-
     return {
         init: function(url, platformId) {
             $("#id_check_auth").click(function() {
@@ -35,12 +34,10 @@ define(['jquery'], function($) {
                             $.ajax({
                                 type: 'GET',
                                 url: reqUrl,
-
                                 beforeSend:
                                     function(http) {
                                         http.setRequestHeader('Authorization', response.token);
                                     },
-
                                 success:
                                     function(response) {
                                         var select = document.getElementById('id_select_course');
@@ -53,7 +50,6 @@ define(['jquery'], function($) {
                                         for (i = 0; i < length; i++) {
                                             select.remove(1);
                                         }
-
                                         response.forEach(
                                             function(course) {
                                                 var opt = document.createElement('option');
@@ -63,11 +59,9 @@ define(['jquery'], function($) {
                                             }
                                         );
                                     },
-
                                 contentType: "application/json"
                             });
                         },
-
                     contentType: "application/json"
                 });
             });
@@ -77,8 +71,6 @@ define(['jquery'], function($) {
                 $("#id_iad_course").val(courseId);
                 $("#id_iad_course_name").val(courseName);
             });
-
         }
     };
-
 });

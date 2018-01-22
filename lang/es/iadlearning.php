@@ -33,7 +33,6 @@ $string['linkname'] = 'acceder al curso';
 $string['modulenameplural'] = 'IADLearning';
 $string['modulename_help'] = 'Este módulo permite el acceso a IADLearning desde Moodle.';
 $string['pluginadministration'] = 'Administración de IAD';
-$string['iadlearning:addinstance'] = 'Añadir actividad de tipo IADLearning';
 $string['select_course'] = 'Seleccionar curso';
 $string['iad_ip'] = 'Dirección IP';
 $string['iad_ip_help'] = 'Dirección IP de IADLearning.';
@@ -109,7 +108,6 @@ $string['format_error'] = 'Este campo requiere un formato distinto';
 $string['creator_id_error'] = 'El creador del curso y su ID de usuario deben coincidir';
 $string['iad_course_error'] = 'El identificador del curso no es válido';
 $string['iad_course_name_error'] = 'El nombre del curso no es válido';
-$string['iad_provisioning_error'] = 'No se han podido generar las claves de demo. Contacte con info@itoptraining.com';
 
 // Events.
 $string['eventACCESSACTIVITY'] = 'Acceso al Contenido de la Actividad';
