@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <libraries>
     <library>
-        <location>mod/iadlearning/amd/orig</location>
-        <name>DataTables</name>
-        <license>MIT</license>
-        <version>1.10.9</version>
-    </library>
-    <library>
         <location>mod/iadlearning/amd/src/buttons.bootstrap.js</location>
         <name>DataTables</name>
         <license>MIT</license>
