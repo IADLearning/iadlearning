@@ -79,7 +79,7 @@ $string['iad_test_score'] = 'Current Score';
 
 $string['iad_test_user'] = 'User Name';
 
-$string['iad_instance_list'] = 'List of IADLearning activities in the course:';
+$string['iad_instance_list'] = 'List of IADLearning activities in the course';
 $string['iad_instance_name'] = 'Activity Name';
 $string['iad_instance_course'] = 'IADLearning Course';
 $string['iad_instance_none'] = 'There are no IADLearning activities in this course';

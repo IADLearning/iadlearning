@@ -62,11 +62,11 @@ $string['view_failed'] = 'Se ha producido un error en la conexión a los conteni
 
 $string['iad_activity'] = 'Actividad';
 $string['iad_access_activity'] = 'Acceder al Contenido de la Actividad';
-$string['iad_activity_info'] = 'Información de la actividad:';
+$string['iad_activity_info'] = 'Información de la actividad';
 $string['iad_last_access'] = 'Último acceso';
 $string['iad_last_access_unable'] = 'No se ha podido contactar con el servidor para conocer el último acceso';
 $string['iad_no_last_access'] = 'NUNCA';
-$string['iad_test_info'] = 'Información de tests:';
+$string['iad_test_info'] = 'Información de tests';
 $string['iad_test_no_info'] = 'No existe información de tests disponible';
 
 $string['iad_test_id'] = 'ID del Test';
@@ -76,7 +76,7 @@ $string['iad_test_score'] = 'Puntuación Actual';
 
 $string['iad_test_user'] = 'Nombre Usuario';
 
-$string['iad_instance_list'] = 'Lista de actividades de tipo IADLearning en el curso:';
+$string['iad_instance_list'] = 'Lista de actividades de tipo IADLearning en el curso';
 $string['iad_instance_name'] = 'Nombre de la Actividad';
 $string['iad_instance_course'] = 'Curso en IADLearning';
 $string['iad_instance_none'] = 'No existen actividades de tipo IADLearning en este curso';
