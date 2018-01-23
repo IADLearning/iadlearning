@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $data Data to hash
  * @param integer $blocksize Block size for SHA1 algorithm
  * @param integer $opad O-key pad
- * @param integer $opad I-key pad
+ * @param integer $ipad I-key pad
  *
  * @return string sha1 hmac hash
  *
@@ -63,10 +63,11 @@ function iadlearning_sha1_hmac($key, $data, $blocksize = 64, $opad = 0x5c, $ipad
 /**
  * Generates URL signature for end to end validation
  *
- * @param array $requestparameters Associative array containing the query string options
  * @param string $secretaccesskey Key used to generate signature
+ * @param array $requestparameters Associative array containing the query string options
  *
  * @return string Signature
+ *
  */
 function iadlearning_generate_signature($secretaccesskey, $requestparameters) {
 
@@ -93,6 +94,7 @@ function iadlearning_generate_signature($secretaccesskey, $requestparameters) {
  * @param array $requestparameters Associative array containing the query string options
  *
  * @return string Query string
+ *
  */
 function iadlearning_generate_url_query($requestparameters) {
 
