@@ -31,9 +31,12 @@ require_once($CFG->dirroot . '/mod/iadlearning/backup/moodle2/backup_iadlearning
 /**
  * IADlearning backup task that provides all the settings and steps to perform one
  * complete backup of the activity.
+ *
+ * @access public
  */
-
 class backup_iadlearning_activity_task extends backup_activity_task {
+
+
 
     /**
      * Define (add) particular settings this activity can have.
@@ -55,7 +58,7 @@ class backup_iadlearning_activity_task extends backup_activity_task {
      * Code the transformations to perform in the activity in
      * order to get transportable (encoded) links.
      *
-     * @params string $content Link to encode
+     * @param string $content Link to encode
      *
      * @return string encoded link
      */

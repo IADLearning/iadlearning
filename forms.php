@@ -28,8 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
+/**
+ * Class contining the forms required to obtain demo keys
+ *
+ * @access public
+ */
 class iadlearning_get_keys_form extends moodleform {
-
 
     /**
      * Defines elements included in the form used to gather new demo
@@ -84,7 +88,6 @@ class iadlearning_get_keys_form extends moodleform {
      *
      * @return string $errors Errors found on validation
      */
-
     public function validation($data, $files) {
 
         $errors = parent::validation($data, $files);

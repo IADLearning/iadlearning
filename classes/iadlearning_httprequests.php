@@ -25,8 +25,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class to perform HTTP requests to IADLearning backend
+ *
+ * @access public
+ */
 class iadlearning_http {
-
 
     /**
      * Validates data upon form submission
@@ -80,7 +84,7 @@ class iadlearning_http {
      * Performs a HTTP POST to IADLearning API
      *
      * @param string $apicall Specific call "path"
-     * @param array $filels Fields to be included within the message body as a JSON
+     * @param array $fields Fields to be included within the message body as a JSON
      *
      * @return list($responsecode, $response) HTTP response code and response body
      */

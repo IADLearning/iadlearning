@@ -26,14 +26,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * Validates data upon form submission
- * Uses parent validation
+ * Contains the DB changes required to perform a plugin upgrade
  *
  * @param string $oldversion Current version of the plugin (before update)
  *
  * @return boolean true
  */
-
 function xmldb_iadlearning_upgrade($oldversion) {
     global $DB;
 

@@ -27,6 +27,13 @@ namespace mod_iadlearning\event;
 
 defined('MOODLE_INTERNAL') || die();
 
+
+/**
+ * Class to accomodate the avtivity 'view' event
+ *
+ * @access private
+ */
+
 class course_module_viewed extends \core\event\course_module_viewed {
 
     /**

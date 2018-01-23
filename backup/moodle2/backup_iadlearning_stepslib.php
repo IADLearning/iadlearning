@@ -26,8 +26,12 @@
 defined('MOODLE_INTERNAL') || die();
 
 
+/**
+ * Class containing the steps required for the activity backup
+ *
+ * @access public
+ */
 class backup_iadlearning_activity_structure_step extends backup_activity_structure_step {
-
 
     /**
      *  Defines structure for backup

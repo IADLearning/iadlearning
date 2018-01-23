@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/* Allows to configure the plugin settings
+/**
+* Allows to configure the plugin settings
 *
 * @package     mod_iadlearning
 * @copyright   www.itoptraining.com

@@ -26,6 +26,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class containing the steps required for the activity restoration
+ *
+ * @access public
+ */
 class restore_iadlearning_activity_structure_step extends restore_activity_structure_step {
 
     /**
@@ -43,6 +48,7 @@ class restore_iadlearning_activity_structure_step extends restore_activity_struc
     /**
      * Adds restored data to the database
      *
+     * @param stdClass $data Information to be inserted in the DB for restoration
      * @return void
      */
     protected function process_iadlearning($data) {

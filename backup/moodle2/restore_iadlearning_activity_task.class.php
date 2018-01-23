@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Activity restoratiuon class
+ * Activity restoration class
  *
  * @package    mod_iadlearning
  * @subpackage backup-moodle2
@@ -29,8 +29,11 @@ require_once($CFG->dirroot . '/mod/iadlearning/backup/moodle2/restore_iadlearnin
 /**
  * choice restore task that provides all the settings and steps to perform one
  * complete restore of the activity.
+ *
+ * * @access public
  */
 class restore_iadlearning_activity_task extends restore_activity_task {
+
     /**
      * Define (add) particular settings this activity can have.
      */
