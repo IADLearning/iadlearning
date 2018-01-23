@@ -39,6 +39,9 @@ require(dirname(__FILE__) . '/classes/iadlearning_httprequests.php');
 /**
  * Class containing the form required to add a new instance of IADLearning
  *
+ * @copyright  www.itoptraining.com
+ * @author     jose.omedes@itoptraining.com
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  * @access public
  */
 class mod_iadlearning_mod_form extends moodleform_mod {
