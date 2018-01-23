@@ -29,11 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 
 
 /**
- * Class to accomodate the avtivity 'view' event
+ * Class to accomodate the activity 'view' event
  *
- * @access private
  */
-
 class course_module_viewed extends \core\event\course_module_viewed {
 
     /**

@@ -32,7 +32,7 @@ defined('MOODLE_INTERNAL') || die();
  * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @access public
+ *
  */
 class restore_iadlearning_activity_structure_step extends restore_activity_structure_step {
 

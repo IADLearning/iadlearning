@@ -29,13 +29,12 @@ require_once($CFG->dirroot . '/mod/iadlearning/backup/moodle2/backup_iadlearning
 require_once($CFG->dirroot . '/mod/iadlearning/backup/moodle2/backup_iadlearning_settingslib.php'); // Because it exists (optional).
 
 /**
- * IADlearning backup task that provides all the settings and steps to perform one
- * complete backup of the activity.
+ * IADlearning backup task that provides all the settings and steps to perform the activity backup
  *
  * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @access public
+ *
  */
 class backup_iadlearning_activity_task extends backup_activity_task {
 

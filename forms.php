@@ -34,7 +34,7 @@ require_once($CFG->libdir.'/formslib.php');
  * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @access public
+ *
  */
 class iadlearning_get_keys_form extends moodleform {
 

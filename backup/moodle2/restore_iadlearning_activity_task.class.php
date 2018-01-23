@@ -27,13 +27,12 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/iadlearning/backup/moodle2/restore_iadlearning_stepslib.php'); // Because it exists (must).
 /**
- * choice restore task that provides all the settings and steps to perform one
- * complete restore of the activity.
+ * IADlearning backup task that provides all the settings and steps to perform one
  *
  * @copyright  www.itoptraining.com
  * @author     jose.omedes@itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @access public
+ *
  */
 class restore_iadlearning_activity_task extends restore_activity_task {
 

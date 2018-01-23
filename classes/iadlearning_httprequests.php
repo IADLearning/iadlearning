@@ -28,7 +28,9 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Class to perform HTTP requests to IADLearning backend
  *
- * @access public
+ * @copyright   www.itoptraining.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
  */
 class iadlearning_http {
 
