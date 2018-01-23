@@ -14,7 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Upgrade database procedures for mod_iadlearning
+ *
+ * @package     mod_iadlearning
+ * @copyright   www.itoptraining.com
+ * @author      jose.omedes@itoptraining.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die();
+
+/**
+ * Validates data upon form submission
+ * Uses parent validation
+ *
+ * @param string $oldversion Current version of the plugin (before update)
+ *
+ * @return boolean true
+ */
 
 function xmldb_iadlearning_upgrade($oldversion) {
     global $DB;

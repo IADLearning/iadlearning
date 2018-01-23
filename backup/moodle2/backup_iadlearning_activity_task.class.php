@@ -14,6 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Activity backup class
+ *
+ * @package    mod_iadlearning
+ * @subpackage backup-moodle2
+ * @copyright  www.itoptraining.com
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/iadlearning/backup/moodle2/backup_iadlearning_stepslib.php'); // Because it exists (must).
@@ -45,6 +54,10 @@ class backup_iadlearning_activity_task extends backup_activity_task {
     /**
      * Code the transformations to perform in the activity in
      * order to get transportable (encoded) links.
+     *
+     * @params string $content Link to encode
+     *
+     * @return string encoded link
      */
     static public function encode_content_links($content) {
 

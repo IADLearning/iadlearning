@@ -21,7 +21,6 @@
  * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date        2017-01-26
  */
 
 namespace mod_iadlearning\event;
@@ -29,17 +28,16 @@ namespace mod_iadlearning\event;
 defined('MOODLE_INTERNAL') || die();
 
 /**
- * The mod_wiziq session viewed event class.
+ * The mod_iadlearning activity viewed event class.
  *
  * @property-read array $other {
  *      Extra information about event.
  *
- *      - string error: the wiziq error in case any.
+ *      - string error: the IADlearning error in case any.
  * }
  *
- * @package    mod_wiziq
- * @since      Moodle 2.7
- * @copyright  www.wiziq.com
+ * @package    mod_iadlearning
+ * @copyright  www.itoptraining.com
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class iadlearning_course_viewed extends \core\event\base {

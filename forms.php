@@ -21,7 +21,6 @@
  * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date        2017-01-26
  */
 
 
@@ -29,8 +28,14 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
 
-class iad_get_keys_form extends moodleform {
+class iadlearning_get_keys_form extends moodleform {
 
+
+    /**
+     * Defines elements included in the form used to gather new demo
+     * keys from the server
+     *
+     */
     public function definition() {
 
         $mform =& $this->_form;
@@ -69,6 +74,16 @@ class iad_get_keys_form extends moodleform {
         $this->add_action_buttons();
 
     }
+
+    /**
+     * Validates data upon form submission
+     * Uses parent validation
+     *
+     * @param stdClass $data Data coming from the form
+     * @param array $files Files uploaded to the form
+     *
+     * @return string $errors Errors found on validation
+     */
 
     public function validation($data, $files) {
 

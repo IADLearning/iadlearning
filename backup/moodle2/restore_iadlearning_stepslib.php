@@ -15,27 +15,36 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Defines all the steps required to perform a backuo on the IADLearning activity
+ *
  * @package    mod_iadlearning
  * @subpackage backup-moodle2
- * @copyright 2010 onwards Eloy Lafuente (stronk7) {@link http://stronk7.com}
+ * @copyright  www.itoptraining.com
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-/**
- * Define all the restore steps that will be used by the restore_iadlearning_activity_task.
- */
-/**
- * Structure step to restore one iadlearning activity.
- */
+
 
 defined('MOODLE_INTERNAL') || die();
 
 class restore_iadlearning_activity_structure_step extends restore_activity_structure_step {
+
+    /**
+     *  Defines structure for restoration
+     *
+     * @return stdClass Restoration structure
+     */
     protected function define_structure() {
         $paths = array();
         $paths[] = new restore_path_element('iadlearning', '/activity/iadlearning');
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
+
+    /**
+     * Adds restored data to the database
+     *
+     * @return void
+     */
     protected function process_iadlearning($data) {
         global $DB;
         $data = (object)$data;
@@ -47,6 +56,12 @@ class restore_iadlearning_activity_structure_step extends restore_activity_struc
         // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
+
+    /**
+     * Post backup operations. Add activity files (if any)
+     *
+     * @return void
+     */
     protected function after_execute() {
         // Add iadlearning related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_iadlearning', 'intro', null);

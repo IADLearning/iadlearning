@@ -21,13 +21,23 @@
  * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date        2017-01-26
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 class iadlearning_http {
 
+
+    /**
+     * Validates data upon form submission
+     * Uses parent validation
+     *
+     * @param string $protocol Protocol to be used HTTP/HTTPS
+     * @param string $url Remote server URL
+     * @param string $port Port to be used for the REST queries
+     *
+     * @return string $errors Errors found on validation
+     */
     public function __construct($protocol, $url, $port) {
 
         $this->protocol = $protocol;
@@ -36,6 +46,14 @@ class iadlearning_http {
 
     }
 
+    /**
+     * Performs a HTTP Get to IADLearning API
+     *
+     * @param string $apicall Specific call "path"
+     * @param array $requestparameters Associative array containing the list of query params.
+     *
+     * @return list($responsecode, $response) HTTP response code and response body
+     */
     public function iadlearning_http_get($apicall, $requestparameters = array()) {
 
         $finalurl = $this->protocol . $this->url . ":" . $this->port . $apicall;
@@ -58,6 +76,14 @@ class iadlearning_http {
     }
 
 
+    /**
+     * Performs a HTTP POST to IADLearning API
+     *
+     * @param string $apicall Specific call "path"
+     * @param array $filels Fields to be included within the message body as a JSON
+     *
+     * @return list($responsecode, $response) HTTP response code and response body
+     */
     public function iadlearning_http_post($apicall, $fields = null) {
 
         $finalurl = $this->protocol . $this->url . ":" . $this->port . $apicall;

@@ -15,13 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Handles iadlearning course view event
+ * Handles mod_iadlearning course view event
  *
  * @package     mod_iadlearning
  * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date        2017-01-26
  */
 
 namespace mod_iadlearning\event;
@@ -29,6 +28,12 @@ namespace mod_iadlearning\event;
 defined('MOODLE_INTERNAL') || die();
 
 class course_module_viewed extends \core\event\course_module_viewed {
+
+    /**
+     * Initializes event
+     *
+     * @return void
+     */
     protected function init() {
         $this->data['objecttable'] = 'iadlearning';
         parent::init();

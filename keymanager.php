@@ -21,7 +21,6 @@
  * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date        2017-01-26
  */
 
 require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
@@ -44,7 +43,7 @@ $PAGE->set_url('/mod/iadlearning/keymanager.php');
 $settingsurl = new moodle_url($CFG->wwwroot . '/admin/settings.php?section=modsettingiadlearning');
 
 $userdata = false;
-$mform = new iad_get_keys_form();
+$mform = new iadlearning_get_keys_form();
 
 if ($mform->is_cancelled()) {
 

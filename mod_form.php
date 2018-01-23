@@ -145,7 +145,6 @@ class mod_iadlearning_mod_form extends moodleform_mod {
      * Validates the data input from various input elements.
      *
      * @param string $data
-     * @param string $files
      *
      * @return string $errors
      */

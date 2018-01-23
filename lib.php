@@ -25,7 +25,6 @@
  * @copyright   www.itoptraining.com
  * @author      jose.omedes@itoptraining.com
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @date        2017-02*10
  */
 
 defined('MOODLE_INTERNAL') || die();

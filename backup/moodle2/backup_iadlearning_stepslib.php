@@ -14,10 +14,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Defines all the steps required to perform a backup on the IADLearning activity
+ *
+ * @package    mod_iadlearning
+ * @subpackage backup-moodle2
+ * @copyright  www.itoptraining.com
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die();
+
 
 class backup_iadlearning_activity_structure_step extends backup_activity_structure_step {
 
+
+    /**
+     *  Defines structure for backup
+     *
+     * @return stdClass backup structure
+     */
     protected function define_structure() {
 
         // Define each element separated.
